@@ -3,6 +3,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import FormInput from "./FormInput";
+import { signIn } from "next-auth/react";
 
 interface FormData {
 	fullname: string;
@@ -11,7 +12,7 @@ interface FormData {
 	password: string;
 }
 
-const SignupForm = () => {
+const SigninForm = () => {
 	const router = useRouter();
 	const [formData, setFormData] = useState<FormData>({
 		fullname: "",
@@ -43,6 +44,13 @@ const SignupForm = () => {
 			});
 
 			if (res.ok) {
+				// Successfully created user, now sign them in
+				await signIn("credentials", {
+					email: formData.email,
+					password: formData.password,
+					callbackUrl: "/newpage",
+				});
+
 				// Redirect to /newpage
 				router.push("/newpage");
 			} else {
@@ -62,27 +70,11 @@ const SignupForm = () => {
 				method="post"
 			>
 				<FormInput
-					label="Full Name"
-					type="text"
-					name="fullname"
-					value={formData.fullname}
-					placeholder="Enter your name"
-					onChange={handleChange}
-				/>
-				<FormInput
 					label="Email"
 					type="email"
 					name="email"
 					value={formData.email}
 					placeholder="Enter your email"
-					onChange={handleChange}
-				/>
-				<FormInput
-					label="Telephone"
-					type="text"
-					name="telephone"
-					value={formData.telephone}
-					placeholder="e.g. 08179179519"
 					onChange={handleChange}
 				/>
 				<FormInput
@@ -95,11 +87,11 @@ const SignupForm = () => {
 				/>
 				{errorMessage && <div>{errorMessage}</div>}
 				<div className="bg-[#287DF9] rounded-[10px] text-white text-sm text-center p-5 w-full max-w-[360px] cursor-pointer font-normal">
-					<button type="submit">Sign up</button>
+					<button type="submit">Sign in</button>
 				</div>
 			</form>
 		</>
 	);
 };
 
-export default SignupForm;
+export default SigninForm;

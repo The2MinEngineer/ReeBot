@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import User from "@/app/(models)/User";
 import bcrypt from "bcrypt";
-import { getSession, signIn } from "next-auth/react";
 
-export async function POST(req: any) {
+// Define the POST handler
+export async function POST(req: NextRequest) {
 	try {
 		const body = await req.json();
 		const userData = body.formData;
@@ -35,22 +35,11 @@ export async function POST(req: any) {
 
 		await User.create(userData);
 
-		// Trigger authentication here to obtain session and token
-		const session = await getSession({ req });
-
-		// Sign in the user immediately after signing up
-		await signIn("credentials", {
-			email: userData.email,
-			password: userData.password,
-			callbackUrl: "/newpage",
-		});
-
-		// Return session information in the response
-		return NextResponse.json({ session }, { status: 201 });
+		return NextResponse.json({ message: "User created successfully." });
 	} catch (error) {
 		console.error(error);
 		return NextResponse.json(
-			{ message: "You have an error here." },
+			{ message: "An error occurred during user creation." },
 			{ status: 500 }
 		);
 	}
