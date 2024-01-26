@@ -1,91 +1,68 @@
 "use client";
-
-import { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 import FormInput from "./FormInput";
-import { signIn } from "next-auth/react";
-
-interface FormData {
-	fullname: string;
-	email: string;
-	telephone: string;
-	password: string;
-}
 
 const SigninForm = () => {
 	const router = useRouter();
-	const [formData, setFormData] = useState<FormData>({
-		fullname: "",
+	const [info, setInfo] = useState({
 		email: "",
-		telephone: "",
 		password: "",
 	});
-	const [errorMessage, setErrorMessage] = useState("");
-
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { value, name } = e.target;
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			[name]: value,
-		}));
+	const [error, setError] = useState("");
+	const [pending, setPending] = useState(false);
+	const handleChange = (e: any) => {
+		setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 	};
-
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		setErrorMessage("");
-
+		if (!info.email || !info.password) {
+			setError("Please fill in all fields");
+		}
 		try {
-			const res = await fetch("/api/users", {
-				method: "POST",
-				body: JSON.stringify({ formData }),
-				headers: {
-					"Content-Type": "application/json",
-				},
+			setPending(true);
+			const res: any = await signIn("credentials", {
+				email: info.email,
+				password: info.password,
+				redirect: false,
 			});
 
-			if (res.ok) {
-				// Successfully created user, now sign them in
-				await signIn("credentials", {
-					email: formData.email,
-					password: formData.password,
-					callbackUrl: "/newpage",
-				});
-
-				// Redirect to /newpage
-				router.push("/newpage");
-			} else {
-				const response = await res.json();
-				setErrorMessage(response.message);
+			if (res.error) {
+				setError("Invalid Credentials.");
+				setPending(false);
+				return;
 			}
-		} catch (error) {
-			console.error("An error occurred:", error);
-			setErrorMessage("An error occurred during sign-up.");
+			setPending(false);
+			const form = e.target;
+			form.reset();
+			router.replace("/");
+		} catch (err) {
+			setPending(false);
+			setError("something went wrong");
 		}
 	};
 
 	return (
 		<>
-			<form
-				onSubmit={handleSubmit}
-				method="post"
-			>
+			<form onSubmit={handleSubmit}>
 				<FormInput
 					label="Email"
 					type="email"
 					name="email"
-					value={formData.email}
+					value={info.email}
 					placeholder="Enter your email"
-					onChange={handleChange}
+					onChange={(e: any) => handleChange(e)}
 				/>
 				<FormInput
 					label="Password"
 					type="password"
 					name="password"
-					value={formData.password}
+					value={info.password}
 					placeholder="Enter your password"
-					onChange={handleChange}
+					onChange={(e: any) => handleChange(e)}
 				/>
-				{errorMessage && <div>{errorMessage}</div>}
+				{error && <span className="text-[red]">{error}</span>}
 				<div className="bg-[#287DF9] rounded-[10px] text-white text-sm text-center p-5 w-full max-w-[360px] cursor-pointer font-normal">
 					<button type="submit">Sign in</button>
 				</div>

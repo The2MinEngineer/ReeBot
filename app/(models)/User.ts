@@ -1,11 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-if (!process.env.MONGODB_URI) {
-	throw new Error("MONGODB_URI environment variable is not defined.");
-}
-
-mongoose.connect(process.env.MONGODB_URI);
-mongoose.Promise = global.Promise;
+const { Schema } = mongoose;
 
 const userSchema = new Schema(
 	{
@@ -29,18 +24,6 @@ const userSchema = new Schema(
 			required: [true, "password is required!"],
 			select: false,
 		},
-		// telephone: {
-		// 	type: String,
-		// 	required: [true, "phone number is required!"],
-		// 	match: [
-		// 		/^(?:\+234|0)([7-9]{1})([0-9]{9})$/,
-		// 		"Invalid Nigerian phone number!",
-		// 	],
-		// },
-		// gender: {
-		// 	type: String,
-		// 	required: [true, "Gender is required!"],
-		// },
 	},
 	{
 		timestamps: true,
