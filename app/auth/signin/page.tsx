@@ -1,9 +1,7 @@
 import AuthHeader from "@/app/components/AuthHeader";
-import AuthToggle from "@/app/components/AuthToggle";
 import Logo from "@/app/components/Logo";
 import SigninForm from "@/app/components/SigninForm";
 import Link from "next/link";
-import React from "react";
 
 const page = () => {
 	return (

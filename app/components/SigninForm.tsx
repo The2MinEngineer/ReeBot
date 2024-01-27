@@ -36,7 +36,7 @@ const SigninForm = () => {
 			setPending(false);
 			const form = e.target;
 			form.reset();
-			router.replace("/");
+			router.replace("/dashboard");
 		} catch (err) {
 			setPending(false);
 			setError("something went wrong");

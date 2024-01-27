@@ -33,7 +33,7 @@ const signin = async (credentials) => {
 export const authOptions = {
 	pages: {
 		signIn: "/auth/signin",
-		error: "/dashboard/signin",
+		error: "/auth/signin",
 	},
 	providers: [
 		CredentialsProvider({
