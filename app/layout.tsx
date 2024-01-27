@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
