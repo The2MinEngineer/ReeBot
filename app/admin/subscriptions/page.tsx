@@ -1,7 +1,12 @@
-import React from "react";
+import Navbar from "@/app/components/Navbar";
 
 const Subscriptions = () => {
-	return <div>subscriptions</div>;
+	return (
+		<div>
+			<Navbar />
+			subscriptions
+		</div>
+	);
 };
 
 export default Subscriptions;

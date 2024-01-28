@@ -10,7 +10,7 @@ export default function AdminLayout({
 			<div>
 				<Sidebar />
 			</div>
-			<div>{children}</div>
+			<div className="bg-[#F3F4F3] w-full">{children}</div>
 		</section>
 	);
 }

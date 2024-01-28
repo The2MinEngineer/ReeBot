@@ -1,7 +1,12 @@
-import React from "react";
+import Navbar from "@/app/components/Navbar";
 
 const Profile = () => {
-	return <div>Profile</div>;
+	return (
+		<div>
+			<Navbar />
+			Profile
+		</div>
+	);
 };
 
 export default Profile;

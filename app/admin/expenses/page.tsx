@@ -1,9 +1,12 @@
-import React from 'react'
+import Navbar from "@/app/components/Navbar";
 
 const Expenses = () => {
-  return (
-    <div>Expenses</div>
-  )
-}
+	return (
+		<div>
+			<Navbar />
+			Expenses
+		</div>
+	);
+};
 
-export default Expenses
+export default Expenses;

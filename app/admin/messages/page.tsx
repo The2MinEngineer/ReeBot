@@ -1,9 +1,12 @@
-import React from 'react'
+import Navbar from "@/app/components/Navbar";
 
 const Messages = () => {
-  return (
-    <div>Messages</div>
-  )
-}
+	return (
+		<div>
+			<Navbar />
+			Messages
+		</div>
+	);
+};
 
-export default Messages
+export default Messages;
