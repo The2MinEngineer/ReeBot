@@ -20,7 +20,7 @@ const Sidebar = () => {
 			signOut();
 		} else {
 			setActiveMenuItem(text);
-			router.push(`/${text.toLowerCase()}`);
+			router.push(`/admin/${text.toLowerCase()}`);
 		}
 	};
 
@@ -57,7 +57,7 @@ const Sidebar = () => {
 							key={index}
 							className={`${
 								activeMenuItem === menuItem.text ? "bg-[#287DF9]" : ""
-							} p-4 rounded-[5px] w-full flex justify-between text-white hover:bg-[#287DF9]/40 transition duration-300 items-center  text-sm font-medium cursor-pointer`}
+							} p-4 rounded-[5px] w-full flex justify-between text-white hover:bg-[#287DF9]/40 transition duration-300 items-center text-sm font-medium cursor-pointer`}
 							onClick={() => handleMenuItemClick(menuItem.text)}
 						>
 							<div className="flex items-center gap-5">
@@ -96,7 +96,7 @@ const Sidebar = () => {
 							key={index}
 							className={`${
 								activeMenuItem === accountItem.text ? "bg-[#287DF9]" : ""
-							} p-4 rounded-[5px] w-full flex justify-between text-white items-center hover:bg-[#287DF9]/40 transition duration-300 font-medium cursor-pointer`}
+							} p-4 rounded-[5px] w-full flex justify-between text-white items-center hover:bg-[#287DF9]/40 transition duration-300 text-sm font-medium cursor-pointer`}
 							onClick={() => handleMenuItemClick(accountItem.text)}
 						>
 							<div className="flex items-center gap-5">

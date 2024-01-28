@@ -35,5 +35,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-1. Make sign up with styling and authenticate users to newpage
-   2 make sign in with styling and authenticate and authorize users to newpage or where they were in the page
+1. signout
+2. make a new layout file to house the app when authenticated. then add the sidebar there
