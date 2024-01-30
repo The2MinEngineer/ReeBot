@@ -1,9 +1,13 @@
+import Link from "next/link";
+
 import Logo from "@/app/components/Logo";
 import Navbar from "@/app/components/Navbar";
-import Link from "next/link";
+import SubscriptionCard from "@/app/components/SubscriptionCard";
 
 import { GoArrowRight } from "react-icons/go";
 import { FiArrowDownRight } from "react-icons/fi";
+import { FaSpotify } from "react-icons/fa";
+import { SiApplemusic, SiNetflix } from "react-icons/si";
 
 const Dashboard = () => {
 	return (
@@ -93,8 +97,33 @@ const Dashboard = () => {
 				</div>
 			</div>
 
-			<div className="p-5 flex justify-between gap-5">
-				<h2 className="text-[#181818] text-lg font-bold mb-5">Subscriptions</h2>
+			<div className="p-5">
+				<div className="flex justify-between mb-5">
+					<h2 className="text-[#181818] text-lg font-bold">Subscriptions</h2>
+					<Link
+						href="/admin/subscriptions"
+						className="text-[#287DF9] text-base font-medium underline"
+					>
+						View all
+					</Link>
+				</div>
+				<div className="flex items-center gap-5">
+					<SubscriptionCard
+						icon={<FaSpotify className="text-white text-[40px] mb-2" />}
+						text="Spotify"
+						className="p-5 rounded-[20px] w-[300px] bg-[#EE4466]"
+					/>
+					<SubscriptionCard
+						icon={<SiApplemusic className="text-white text-[40px] mb-2" />}
+						text="Apple Music"
+						className="p-5 rounded-[20px] w-[300px] bg-[#5D82B7]"
+					/>
+					<SubscriptionCard
+						icon={<SiNetflix className="text-white text-[40px] mb-2" />}
+						text="Netflix "
+						className="p-5 rounded-[20px] w-[300px] bg-[#181818]"
+					/>
+				</div>
 			</div>
 		</div>
 	);
