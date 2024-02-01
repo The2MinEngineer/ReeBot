@@ -18,13 +18,7 @@ const TableHeader = ({ data }: { data: any }) => {
 						</span>
 					)}
 					{column.label}
-					{index !== data.length - 1 && (
-						<span className="ml-48">
-							{" "}
-							{/* Adjust the margin as needed */}
-							{/* Add additional spacing between labels if needed */}
-						</span>
-					)}
+					{index !== data.length - 1 && <span className="ml-48"></span>}
 				</p>
 			))}
 		</div>
