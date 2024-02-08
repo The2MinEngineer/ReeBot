@@ -3,6 +3,7 @@ import Link from "next/link";
 import Logo from "@/app/components/Logo";
 import Navbar from "@/app/components/Navbar";
 import SubscriptionCard from "@/app/components/SubscriptionCard";
+import ToggleButton from "@/app/components/ToggleButton";
 
 import { GoArrowRight } from "react-icons/go";
 import { FiArrowDownRight } from "react-icons/fi";
@@ -37,6 +38,12 @@ const Dashboard = () => {
 					<div className="rounded-[20px] bg-white p-10">
 						<div className="flex justify-between mb-[46px]">
 							<h2 className="text-[#181818] text-lg font-bold">EXPENSES</h2>
+							<div className="flex items-center">
+								<h2 className="text-lg text-[#181818] font-medium text-opacity-70">
+									Activate All:<span> </span>
+								</h2>
+								<ToggleButton value={true} />
+							</div>
 						</div>
 						<div className="flex items-center mb-10">
 							<p className="text-[#181818] text-[64px] font-bold tracking-tight">
@@ -112,16 +119,19 @@ const Dashboard = () => {
 						icon={<FaSpotify className="text-white text-[40px] mb-2" />}
 						text="Spotify"
 						className="p-5 rounded-[20px] w-[300px] bg-[#EE4466]"
+						toggle={<ToggleButton value={true} />}
 					/>
 					<SubscriptionCard
 						icon={<SiApplemusic className="text-white text-[40px] mb-2" />}
 						text="Apple Music"
 						className="p-5 rounded-[20px] w-[300px] bg-[#5D82B7]"
+						toggle={<ToggleButton value={true} />}
 					/>
 					<SubscriptionCard
 						icon={<SiNetflix className="text-white text-[40px] mb-2" />}
 						text="Netflix "
 						className="p-5 rounded-[20px] w-[300px] bg-[#181818]"
+						toggle={<ToggleButton value={true} />}
 					/>
 				</div>
 			</div>
