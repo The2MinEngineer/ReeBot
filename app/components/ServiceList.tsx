@@ -1,7 +1,9 @@
 import AddServiceButton from "./AddServiceButton";
 
-import { RiEditBoxFill, RiDeleteBin7Fill } from "react-icons/ri";
+import { RiEditBoxFill } from "react-icons/ri";
 import ToggleButton from "./ToggleButton";
+import Link from "next/link";
+import RemoveBtn from "./RemoveBtn";
 
 const getServices = async () => {
 	try {
@@ -78,10 +80,12 @@ const ServiceList = async () => {
 								<td>{rs.dueDate}</td>
 							</div>
 							<td>
-								<RiEditBoxFill />
+								<Link href={`/admin/editService/${rs._id}`}>
+									<RiEditBoxFill className="text-lg text-[#181818] text-opacity-70" />
+								</Link>
 							</td>
 							<td>
-								<RiDeleteBin7Fill />
+								<RemoveBtn id={rs._id} />
 							</td>
 							<td>
 								<ToggleButton />
