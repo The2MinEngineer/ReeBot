@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import User from "./User";
 
 const { Schema } = mongoose;
 
@@ -11,7 +10,7 @@ const serviceSchema = new Schema(
 			minlength: [2, "Platform should be at least 2 characters long"],
 			maxlength: [30, "Platform should be less than 30 characters"],
 		},
-		platformType: {
+		type: {
 			type: String,
 			required: [true, "Type is required!"],
 			minlength: [2, "PlatformType should be at least 2 characters long"],
@@ -29,11 +28,11 @@ const serviceSchema = new Schema(
 			type: Date,
 			required: [true, "Due date is required!"],
 		},
-		user: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-			required: true,
-		},
+		// user: {
+		// 	type: mongoose.Schema.Types.ObjectId,
+		// 	ref: "User",
+		// 	required: true,
+		// },
 	},
 	{
 		timestamps: true,
