@@ -11,6 +11,14 @@ export async function GET() {
 export async function POST(request) {
 	const { platform, type, payment, startDate, dueDate } = await request.json();
 	await connectDB();
-	await Service.create({ platform, type, payment, startDate, dueDate });
+
+	await Service.create({
+		platform,
+		type,
+		payment,
+		startDate,
+		dueDate,
+	});
+
 	return NextResponse.json({ message: "Service created." }, { status: 201 });
 }

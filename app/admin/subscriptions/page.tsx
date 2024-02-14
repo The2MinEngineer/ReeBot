@@ -1,10 +1,10 @@
 import React from "react";
 import Navbar from "@/app/components/Navbar";
 import ToggleButton from "@/app/components/ToggleButton";
+import ServiceList from "@/app/components/ServiceList";
 
 import { MdCancel } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
-import ServiceList from "@/app/components/ServiceList";
 
 const Subscriptions = () => {
 
