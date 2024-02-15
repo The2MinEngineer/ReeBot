@@ -1,8 +1,8 @@
 "use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
-import FormInput from "./FormInput";
 import Link from "next/link";
 
 const SigninForm = () => {
@@ -12,36 +12,44 @@ const SigninForm = () => {
 		password: "",
 	});
 	const [error, setError] = useState("");
-	const [pending, setPending] = useState(false);
+	// const [pending, setPending] = useState(false);
 	const handleChange = (e: any) => {
 		setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 	};
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
+
 		if (!info.email || !info.password) {
 			setError("Please fill in all fields");
 		}
-		try {
-			setPending(true);
-			const res: any = await signIn("credentials", {
-				email: info.email,
-				password: info.password,
-				redirect: false,
-			});
 
-			if (res.error) {
-				setError("Invalid Credentials.");
-				setPending(false);
-				return;
-			}
-			setPending(false);
-			const form = e.target;
-			form.reset();
-			router.replace("/dashboard");
-		} catch (err) {
-			setPending(false);
-			setError("something went wrong");
-		}
+		signIn("credentials", {
+			...info,
+			redirect: false,
+		});
+		router.push("/dashboard");
+
+		// try {
+		// 	setPending(true);
+		// 	const res: any = await signIn("credentials", {
+		// 		email: info.email,
+		// 		password: info.password,
+		// 		redirect: false,
+		// 	});
+
+		// 	if (res.error) {
+		// 		setError("Invalid Credentials.");
+		// 		setPending(false);
+		// 		return;
+		// 	}
+		// 	setPending(false);
+		// 	const form = e.target;
+		// 	form.reset();
+		// 	router.replace("/dashboard");
+		// } catch (err) {
+		// 	setPending(false);
+		// 	setError("something went wrong");
+		// }
 	};
 
 	return (

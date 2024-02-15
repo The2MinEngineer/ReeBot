@@ -9,6 +9,7 @@ const SignupForm = () => {
 	const [info, setInfo] = useState({
 		fullname: "",
 		email: "",
+		telephone: "",
 		password: "",
 	});
 	const [error, setError] = useState("");
@@ -18,7 +19,7 @@ const SignupForm = () => {
 	};
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		if (!info.fullname || !info.email || !info.password) {
+		if (!info.fullname || !info.email || !info.telephone || !info.password) {
 			setError("Please fill in all fields");
 		}
 		try {
@@ -34,7 +35,7 @@ const SignupForm = () => {
 				setPending(false);
 				const form = e.target;
 				form.reset();
-				router.push("/auth/signin");
+				router.push("/signin");
 			} else {
 				const errorData = await res.json();
 				setError(errorData.message);
@@ -60,7 +61,7 @@ const SignupForm = () => {
 					<input
 						type="text"
 						name="fullname"
-						id="email"
+						id="fullname"
 						placeholder="Enter your name"
 						value={info.fullname}
 						onChange={(e: any) => handleChange(e)}
@@ -78,6 +79,21 @@ const SignupForm = () => {
 						id="email"
 						placeholder="Enter your email"
 						value={info.email}
+						onChange={(e: any) => handleChange(e)}
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+					/>
+				</div>
+
+				<div>
+					<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+						Telephone
+					</label>
+					<input
+						type="number"
+						name="telephone"
+						id="telephone"
+						placeholder="Enter your phone number"
+						value={info.telephone}
 						onChange={(e: any) => handleChange(e)}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					/>

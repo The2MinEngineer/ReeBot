@@ -7,7 +7,7 @@ const AddServiceButton = () => {
 			<div className="text-right bg-[#181818] p-5 rounded-[5px] cursor-pointer transition duration-300 hover:bg-opacity-40">
 				<Link
 					className="  "
-					href={"/admin/addService"}
+					href={"/addService"}
 				>
 					<FaPlus className="text-white text-lg" />
 				</Link>

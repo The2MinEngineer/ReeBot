@@ -9,16 +9,39 @@ export async function GET() {
 }
 
 export async function POST(request) {
-	const { platform, type, payment, startDate, dueDate } = await request.json();
-	await connectDB();
+	try {
+		const requestData = await request.json();
+		console.log("Request Data:", requestData);
 
-	await Service.create({
-		platform,
-		type,
-		payment,
-		startDate,
-		dueDate,
-	});
+		const { platform, type, payment, startDate, dueDate, user } = requestData;
 
-	return NextResponse.json({ message: "Service created." }, { status: 201 });
+		const userId = user && user._id;
+
+		if (!userId) {
+			console.error("User ID not found in the request payload.");
+			return NextResponse.json(
+				{ error: "User ID not found in the request payload." },
+				{ status: 400 }
+			);
+		}
+
+		await connectDB();
+
+		await Service.create({
+			platform,
+			type,
+			payment,
+			startDate,
+			dueDate,
+			user: userId,
+		});
+
+		return NextResponse.json({ message: "Service created." }, { status: 201 });
+	} catch (error) {
+		console.error("Error in POST function:", error);
+		return NextResponse.json(
+			{ error: "Failed to create service." },
+			{ status: 500 }
+		);
+	}
 }

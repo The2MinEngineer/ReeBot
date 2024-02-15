@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+
 import Logo from "@/app/components/Logo";
 import { BiSolidDashboard, BiSolidNotification } from "react-icons/bi";
 import { MdSubscriptions, MdContactSupport } from "react-icons/md";
@@ -9,18 +11,19 @@ import { BsPersonFill } from "react-icons/bs";
 import { FiChevronRight } from "react-icons/fi";
 import { LuArrowDownUp } from "react-icons/lu";
 import { TbLogout2 } from "react-icons/tb";
-import { signOut } from "next-auth/react";
 
 const Sidebar = () => {
 	const router = useRouter();
 	const [activeMenuItem, setActiveMenuItem] = useState("Dashboard");
 
 	const handleMenuItemClick = (text: string) => {
+		console.log("Handling menu item click:", text);
+
 		if (text === "Logout") {
 			signOut();
 		} else {
 			setActiveMenuItem(text);
-			router.push(`/admin/${text.toLowerCase()}`);
+			router.push(`/${text.toLowerCase()}`);
 		}
 	};
 
@@ -56,7 +59,9 @@ const Sidebar = () => {
 						<div
 							key={index}
 							className={`${
-								activeMenuItem === menuItem.text ? "bg-[#287DF9]" : ""
+								activeMenuItem === menuItem.text
+									? "bg-[#287DF9]"
+									: "bg-transparent"
 							} p-4 rounded-[5px] w-full flex justify-between text-white hover:bg-[#287DF9]/40 transition duration-300 items-center text-sm font-medium cursor-pointer`}
 							onClick={() => handleMenuItemClick(menuItem.text)}
 						>

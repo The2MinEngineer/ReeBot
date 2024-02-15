@@ -19,6 +19,15 @@ const userSchema = new Schema(
 				"Invalid email address!",
 			],
 		},
+		telephone: {
+			type: Number,
+			unique: true,
+			required: [true, "telephone is required!"],
+			match: [
+				/^(?:(?:(?:\+?234(?:\d{1,})?|0)\d*)?(?:\(\d{3}\)|\d{3})|\d{4})(?:\W*\d{3})?\W*\d{4}(?!\d)$/,
+				"Invalid phone number",
+			],
+		},
 		password: {
 			type: String,
 			required: [true, "password is required!"],

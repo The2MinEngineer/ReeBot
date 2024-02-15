@@ -10,7 +10,11 @@ export async function PUT(request, { params }) {
 		newPayment: payment,
 		newStartDate: startDate,
 		newDueDate: dueDate,
+		user,
 	} = await request.json();
+
+	const userId = user._id; // Assuming _id represents the user ID in your User model
+
 	await connectDB();
 	await Service.findByIdAndUpdate(id, {
 		platform,
@@ -18,7 +22,9 @@ export async function PUT(request, { params }) {
 		payment,
 		startDate,
 		dueDate,
+		user: userId, // Assign the user ID to the 'user' field
 	});
+
 	return NextResponse.json({ message: "Service updated" }, { status: 200 });
 }
 

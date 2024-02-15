@@ -6,7 +6,7 @@ import User from "@/app/(models)/User";
 export const POST = async (request) => {
 	try {
 		await connectDB();
-		const { fullname, email, password } = await request.json();
+		const { fullname, email, password, telephone } = await request.json();
 
 		const exists = await User.findOne({ email });
 		if (exists) {
@@ -15,10 +15,9 @@ export const POST = async (request) => {
 				{ status: 500 }
 			);
 		}
-		console.log("user exists");
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		await User.create({ fullname, email, password: hashedPassword });
+		await User.create({ fullname, email, telephone, password: hashedPassword });
 		return NextResponse.json(
 			{ message: "User registered successfully" },
 			{ status: 201 }
