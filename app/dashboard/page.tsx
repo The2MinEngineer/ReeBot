@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 import Logo from "@/app/components/Logo";
-import Navbar from "@/app/components/Navbar";
 import SubscriptionCard from "@/app/components/SubscriptionCard";
 import ToggleButton from "@/app/components/ToggleButton";
+import MainAppTemplate from "../MainAppTemplete";
 
 import { GoArrowRight } from "react-icons/go";
 import { FiArrowDownRight } from "react-icons/fi";
@@ -12,8 +12,7 @@ import { SiApplemusic, SiNetflix } from "react-icons/si";
 
 const Dashboard = () => {
 	return (
-		<div>
-			<Navbar />
+		<MainAppTemplate>
 			<div className="p-5 flex justify-between gap-5">
 				<div className="bg-white rounded-[20px] w-1/4 p-5">
 					<div className="mt-5">
@@ -135,7 +134,7 @@ const Dashboard = () => {
 					/>
 				</div>
 			</div>
-		</div>
+		</MainAppTemplate>
 	);
 };
 

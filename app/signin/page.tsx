@@ -1,7 +1,6 @@
 import AuthHeader from "@/app/components/AuthHeader";
 import Logo from "@/app/components/Logo";
 import SigninForm from "@/app/components/SigninForm";
-import Link from "next/link";
 
 const page = () => {
 	return (
@@ -23,12 +22,6 @@ const page = () => {
 				<div className="mt-10 flex flex-col justify-between flex-1">
 					<div>
 						<SigninForm />
-						<p className="text-[#181811] text-opacity-40 text-sm mt-2">
-							Don't have an account?{" "}
-							<span className="text-[#287DF9] text-opacity-100 hover:cursor-pointer hover:underline">
-								<Link href="/auth/signup">Signup</Link>
-							</span>
-						</p>
 					</div>
 					<div>
 						<p className="text-[#181818] text-opacity-40 text-center text-sm font-normal max-w-[360px]">

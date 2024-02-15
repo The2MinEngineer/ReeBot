@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import FormInput from "./FormInput";
+import Link from "next/link";
 
 const SignupForm = () => {
 	const router = useRouter();
@@ -49,37 +49,65 @@ const SignupForm = () => {
 	return (
 		<>
 			<form
+				className="space-y-4 md:space-y-6"
 				onSubmit={handleSubmit}
 				method="post"
 			>
-				<FormInput
-					label="Full Name"
-					type="text"
-					name="fullname"
-					value={info.fullname}
-					placeholder="Enter your name"
-					onChange={(e: any) => handleChange(e)}
-				/>
-				<FormInput
-					label="Email"
-					type="email"
-					name="email"
-					value={info.email}
-					placeholder="Enter your email"
-					onChange={(e: any) => handleChange(e)}
-				/>
-				<FormInput
-					label="Password"
-					type="password"
-					name="password"
-					value={info.password}
-					placeholder="Enter your password"
-					onChange={(e: any) => handleChange(e)}
-				/>
+				<div>
+					<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+						Full Name
+					</label>
+					<input
+						type="text"
+						name="fullname"
+						id="email"
+						placeholder="Enter your name"
+						value={info.fullname}
+						onChange={(e: any) => handleChange(e)}
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+					/>
+				</div>
+
+				<div>
+					<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+						Email
+					</label>
+					<input
+						type="email"
+						name="email"
+						id="email"
+						placeholder="Enter your email"
+						value={info.email}
+						onChange={(e: any) => handleChange(e)}
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+					/>
+				</div>
+
+				<div>
+					<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+						Password
+					</label>
+					<input
+						type="password"
+						name="password"
+						id="password"
+						placeholder="••••••••"
+						value={info.password}
+						onChange={(e: any) => handleChange(e)}
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+					/>
+				</div>
 				{error && <span className="text-[red]">{error}</span>}
 				<div className="bg-[#287DF9] rounded-[10px] text-white text-sm text-center p-5 w-full max-w-[360px] cursor-pointer font-normal">
 					<button type="submit">Sign up</button>
 				</div>
+
+				<p className="text-[#181811] text-opacity-40 text-sm mt-2">
+					Already have an account?{" "}
+					<span className="text-[#287DF9] text-opacity-100 hover:cursor-pointer hover:underline">
+						<Link href="/signin">Signin</Link>
+					</span>
+				</p>
 			</form>
 		</>
 	);

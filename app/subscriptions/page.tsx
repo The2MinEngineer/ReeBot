@@ -1,5 +1,4 @@
-import React from "react";
-import Navbar from "@/app/components/Navbar";
+import MainAppTemplate from "../MainAppTemplete";
 import ToggleButton from "@/app/components/ToggleButton";
 import ServiceList from "@/app/components/ServiceList";
 
@@ -9,8 +8,7 @@ import { FaTrash } from "react-icons/fa";
 const Subscriptions = () => {
 
 	return (
-		<div>
-			<Navbar />
+		<MainAppTemplate>
 			<div className="my-10 mx-5">
 				<div className="flex items-center justify-between w-full mb-10">
 					<div className="flex-1">
@@ -27,7 +25,7 @@ const Subscriptions = () => {
 					<ServiceList />
 				</div>
 			</div>
-		</div>
+		</MainAppTemplate>
 	);
 };
 
