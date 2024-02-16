@@ -4,93 +4,70 @@ import connectDB from "../../../../utils/connect";
 import bcrypt from "bcrypt";
 import User from "@/app/(models)/User";
 
-// const signin = async (credentials) => {
-// 	try {
-// 		connectDB();
-// 		const user = await User.findOne({ email: credentials.email }).select(
-// 			"+password"
-// 		);
-
-// 		if (!user) {
-// 			console.log("User not found");
-// 			return null; // Return null when the user is not found
-// 		}
-
-// 		credentials.password = String(credentials.password);
-// 		const isCorrect = await bcrypt.compare(credentials.password, user.password);
-
-// 		if (!isCorrect) {
-// 			console.log("Password is incorrect");
-// 			return null; // Return null when the password is incorrect
-// 		}
-
-// 		delete user._doc.password;
-// 		return user._doc;
-// 	} catch (err) {
-// 		console.error("Error in signin function:", err);
-// 		throw new Error("Something went wrong");
-// 	}
-// };
-
 export const authOptions = {
 	pages: {
-		signIn: "/signin",
-		error: "/signin",
+		// signIn: "/signin",
+		// error: "/signin",
 	},
 	providers: [
 		CredentialsProvider({
 			name: "credentials",
 			credentials: {
 				fullname: { label: "Fullname", type: "text", placeholder: "Fullname" },
-				password: { label: "Password", type: "password" },
 				email: { label: "Email", type: "email" },
+				telephone: { label: "telephone", type: "number" },
+				password: { label: "Password", type: "password" },
 			},
-			async authorize(credentials) {
+			async authorize(credentials, req) {
 				try {
 					connectDB();
-					// check to see if email and password is valid
-					if (!credentials.fullname || !credentials.password) {
+					console.log("connected");
+					// check to see if email and password are valid
+					if (!credentials.email || !credentials.password) {
+						console.log("Invalid credentials:", credentials);
 						return null;
 					}
 
 					// check to see if the user exists
-					const user = await User.findOne({ email: credentials.email }).select(
-						"+password"
-					);
+					const user = await User.findOne({
+						email: credentials.email,
+					}).select("+password");
 
-					if (!user) return null;
+					if (!user) {
+						console.log("User not found:", credentials.email);
+						return null;
+					}
 
-					// check to see if password match
+					// check to see if the password matches
 					const passwordMatch = await bcrypt.compare(
 						credentials.password,
-						user.hashedpassword
+						user.password // Updated: Changed from user.hashedpassword to user.password
 					);
 
-					if (!passwordMatch) return null;
+					if (!passwordMatch) {
+						console.log("Password does not match:", credentials.email);
+						return null;
+					}
 
 					// return user object if everything is valid
-					return user;
+					console.log("User authenticated:", user.email);
+					return {
+						id: user._id,
+						email: user.email,
+						fullname: user.fullname, // Add other fields as needed
+					};
 				} catch (error) {
-					console.error("Error during authorization:", err);
+					console.error("Error during authorization:", error);
 					throw new Error("Failed to log in");
 				}
-
-				// try {
-				// 	const user = await signin(credentials);
-				// 	if (!user) {
-				// 		throw new Error("User not found or wrong credentials");
-				// 	}
-				// 	return user;
-				// } catch (err) {
-				// 	console.error("Error during authorization:", err);
-				// 	throw new Error("Failed to log in");
-				// }
 			},
 		}),
 	],
 	session: {
 		strategy: "jwt",
 	},
+	secret: process.env.NEXTAUTH_SECRET,
+	debug: process.env.NODE_ENV === "development",
 };
 
 const handler = NextAuth(authOptions);

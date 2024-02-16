@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 const Expenses = () => {
 	const { data: session, status } = useSession();
 	console.log(session);
+
 	return (
 		<MainAppTemplate>
 			<p>Expenses</p>

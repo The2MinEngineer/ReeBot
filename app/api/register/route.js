@@ -6,22 +6,33 @@ import User from "@/app/(models)/User";
 export const POST = async (request) => {
 	try {
 		await connectDB();
-		const { fullname, email, password, telephone } = await request.json();
+		const body = await request.json();
+		const { fullname, email, telephone, password } = body.data;
+		console.log(body.data);
 
-		const exists = await User.findOne({ email });
-		if (exists) {
+		if (!fullname || !email || !telephone || !password) {
+			return new NextResponse("Missing name, email, telephone, or password", {
+				status: 400,
+			});
+		}
+
+		const exist = await User.findOne({ email });
+		if (exist) {
 			return NextResponse.json(
 				{ message: "User already exists" },
-				{ status: 500 }
+				{ status: 400 }
 			);
 		}
+
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		await User.create({ fullname, email, telephone, password: hashedPassword });
-		return NextResponse.json(
-			{ message: "User registered successfully" },
-			{ status: 201 }
-		);
+		const user = await User.create({
+			fullname,
+			email,
+			telephone,
+			password: hashedPassword,
+		});
+		return NextResponse.json(user);
 	} catch (error) {
 		console.error("Error during user registration:", error);
 		return NextResponse.json(

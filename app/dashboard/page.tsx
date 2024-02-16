@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import Logo from "@/app/components/Logo";
 import SubscriptionCard from "@/app/components/SubscriptionCard";
@@ -11,6 +14,9 @@ import { FaSpotify } from "react-icons/fa";
 import { SiApplemusic, SiNetflix } from "react-icons/si";
 
 const Dashboard = () => {
+	const { data: session, status } = useSession();
+	console.log(session);
+
 	return (
 		<MainAppTemplate>
 			<div className="p-5 flex justify-between gap-5">
