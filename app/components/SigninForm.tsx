@@ -16,7 +16,6 @@ const SigninForm = () => {
 	const loginUser = async (e: any) => {
 		try {
 			e.preventDefault();
-			console.log("Form submitted");
 			// signIn returns a promise, so use await
 			const response = await signIn("credentials", {
 				...data,

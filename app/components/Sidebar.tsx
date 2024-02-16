@@ -17,10 +17,8 @@ const Sidebar = () => {
 	const [activeMenuItem, setActiveMenuItem] = useState("Dashboard");
 
 	const handleMenuItemClick = (text: string) => {
-		console.log("Handling menu item click:", text);
-
 		if (text === "Logout") {
-			signOut();
+			signOut().then(() => router.push("/signin"));
 		} else {
 			setActiveMenuItem(text);
 			router.push(`/${text.toLowerCase()}`);

@@ -6,8 +6,9 @@ import User from "@/app/(models)/User";
 
 export const authOptions = {
 	pages: {
-		// signIn: "/signin",
-		// error: "/signin",
+		signIn: "/signin",
+		error: "/signin",
+		signOut: "/signout",
 	},
 	providers: [
 		CredentialsProvider({
