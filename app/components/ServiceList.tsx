@@ -1,28 +1,40 @@
-import AddServiceButton from "./AddServiceButton";
+"use client";
 
-import { RiEditBoxFill } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+
+import AddServiceButton from "./AddServiceButton";
 import ToggleButton from "./ToggleButton";
 import Link from "next/link";
 import RemoveBtn from "./RemoveBtn";
 
-const getServices = async () => {
-	try {
-		const res = await fetch("http://localhost:3000/api/service", {
-			cache: "no-store",
-		});
+import { RiEditBoxFill } from "react-icons/ri";
 
-		if (!res.ok) {
-			throw new Error("Failed to fetch services.");
+const ServiceList = () => {
+	const { data: session } = useSession();
+	const [services, setServices] = useState([]);
+
+	const fetchServices = async () => {
+		try {
+			const response = await fetch(`/api/users/${session?.user?.id}/services`);
+			const result = await response.json();
+
+			// Access the 'data' property
+			const data = result.data || [];
+
+			setServices(data);
+		} catch (error) {
+			console.error("Error fetching services:", error);
 		}
+	};
 
-		return res.json();
-	} catch (error) {
-		console.log("Error loading services: ", error);
-	}
-};
+	useEffect(() => {
+		if (session?.user?.id) {
+			fetchServices();
+		}
+	}, [session?.user?.id]);
 
-const ServiceList = async () => {
-	const { services } = await getServices();
+	console.log(services);
 
 	return (
 		<>
@@ -54,10 +66,10 @@ const ServiceList = async () => {
 					</thead>
 
 					<tbody className="space-y-2 bg-white mt-[10px] sm:rounded-[5px]">
-						{services.map((rs: any) => (
+						{services.map((service: any) => (
 							<tr
 								className="hover space-x-4"
-								key={rs._id}
+								key={service._id}
 							>
 								<td className="p-4 text-left">
 									<label>
@@ -67,18 +79,18 @@ const ServiceList = async () => {
 										/>
 									</label>
 								</td>
-								<td className="py-5 text-left">{rs.platform}</td>
-								<td className="py-5 text-left">{rs.type}</td>
-								<td className="py-5 text-left">N{rs.payment}</td>
-								<td className="py-5 text-left">{rs.startDate}</td>
-								<td className="py-5 text-left">{rs.dueDate}</td>
+								<td className="py-5 text-left">{service.platform}</td>
+								<td className="py-5 text-left">{service.type}</td>
+								<td className="py-5 text-left">N{service.payment}</td>
+								<td className="py-5 text-left">{service.startDate}</td>
+								<td className="py-5 text-left">{service.dueDate}</td>
 								<td className="py-5 text-center">
-									<Link href={`/admin/editService/${rs._id}`}>
+									<Link href={`/editService/${service._id}`}>
 										<RiEditBoxFill className="text-lg text-[#181818] text-opacity-70" />
 									</Link>
 								</td>
 								<td className="py-5 text-center">
-									<RemoveBtn id={rs._id} />
+									<RemoveBtn id={service._id} />
 								</td>
 								<td className="py-5 text-center">
 									<ToggleButton />

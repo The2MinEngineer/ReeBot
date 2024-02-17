@@ -1,8 +1,9 @@
 "use client";
 
-import Navbar from "@/app/components/Navbar";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import Navbar from "@/app/components/Navbar";
 
 const AddService = () => {
 	const [platform, setPlatform] = useState("");
@@ -10,6 +11,8 @@ const AddService = () => {
 	const [payment, setPayment] = useState("");
 	const [startDate, setStartDate] = useState("");
 	const [dueDate, setDueDate] = useState("");
+
+	const { data: session, status } = useSession();
 
 	const router = useRouter();
 
@@ -21,17 +24,24 @@ const AddService = () => {
 			return;
 		}
 
+		// Log the request body
+		const requestBody = {
+			platform,
+			type,
+			startDate,
+			dueDate,
+			payment,
+			userId: session?.user?.id,
+		};
+
 		try {
-			const res = await fetch("http://localhost:3000/api/service", {
+			const res = await fetch("/api/service/new", {
 				method: "POST",
-				headers: {
-					"Content-type": "application/json",
-				},
-				body: JSON.stringify({ platform, payment, type, startDate, dueDate }),
+				body: JSON.stringify(requestBody),
 			});
 
 			if (res.ok) {
-				router.push("/admin/subscriptions");
+				router.push("/subscriptions");
 			} else {
 				throw new Error("Failed to create a service.");
 			}

@@ -51,11 +51,11 @@ export const authOptions = {
 					}
 
 					// return user object if everything is valid
-					console.log("User authenticated:", user.email);
 					return {
 						id: user._id,
 						email: user.email,
-						fullname: user.fullname, // Add other fields as needed
+						fullname: user.fullname,
+						telephone: user.telephone,
 					};
 				} catch (error) {
 					console.error("Error during authorization:", error);
@@ -64,9 +64,28 @@ export const authOptions = {
 			},
 		}),
 	],
-	session: {
-		strategy: "jwt",
+	callbacks: {
+		jwt: async ({ token, user }) => {
+			if (user) {
+				token.uid = user;
+			}
+			return token;
+		},
+		session: async ({ session, token }) => {
+			if (token && token.uid) {
+				session.user = {
+					...token.uid,
+					name: token.uid.fullname,
+					provider: "credentials",
+				};
+			} else {
+				console.error("User data not found in the token.");
+				return {};
+			}
+			return session;
+		},
 	},
+	strategy: "jwt",
 	secret: process.env.NEXTAUTH_SECRET,
 	debug: process.env.NODE_ENV === "development",
 };
