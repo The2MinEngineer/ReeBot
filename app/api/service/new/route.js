@@ -7,14 +7,18 @@ export async function POST(request) {
 		const requestData = await request.json();
 		const { platform, type, payment, startDate, dueDate, userId } = requestData;
 
+		// Convert the date strings to a standard date format
+		const formattedStartDate = new Date(startDate).toISOString().split("T")[0];
+		const formattedDueDate = new Date(dueDate).toISOString().split("T")[0];
+
 		await connectDB();
 		const newService = new Service({
 			creator: userId,
 			platform,
 			type,
 			payment,
-			startDate,
-			dueDate,
+			startDate: formattedStartDate,
+			dueDate: formattedDueDate,
 		});
 
 		await newService.save();

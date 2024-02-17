@@ -5,12 +5,16 @@ import { useSession } from "next-auth/react";
 
 const Expenses = () => {
 	const { data: session, status } = useSession();
-	console.log(session);
 
 	return (
 		<MainAppTemplate>
-			<p>Expenses</p>
-			<p>Hi {session?.user.email}</p>
+			<div className="my-10 mx-5">
+				<div className="flex items-center justify-between w-full mb-10">
+					<div className="flex-1">
+						<h1 className="text-[#181818] font-bold text-2xl">Expenses</h1>
+					</div>
+				</div>
+			</div>
 		</MainAppTemplate>
 	);
 };
