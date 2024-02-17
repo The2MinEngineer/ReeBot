@@ -6,7 +6,6 @@ import { MdCancel } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 
 const Subscriptions = () => {
-
 	return (
 		<MainAppTemplate>
 			<div className="my-10 mx-5">
