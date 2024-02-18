@@ -1,15 +1,30 @@
 import { NextResponse } from "next/server";
 import connectDB from "../../../../utils/connect";
 import Service from "@/app/(models)/Service";
+import { calculateNextDueDate } from "../../../../utils/calculateNextDueDate";
 
 export async function POST(request) {
 	try {
 		const requestData = await request.json();
-		const { platform, type, payment, startDate, dueDate, userId } = requestData;
+		const {
+			platform,
+			type,
+			payment,
+			startDate,
+			dueDate,
+			userId,
+			repeatInterval,
+		} = requestData;
 
 		// Convert the date strings to a standard date format
 		const formattedStartDate = new Date(startDate).toISOString().split("T")[0];
 		const formattedDueDate = new Date(dueDate).toISOString().split("T")[0];
+
+		// Calculate the next due date using the utility function
+		const nextDueDate = calculateNextDueDate(
+			formattedDueDate,
+			repeatInterval
+		);
 
 		await connectDB();
 		const newService = new Service({
@@ -18,7 +33,8 @@ export async function POST(request) {
 			type,
 			payment,
 			startDate: formattedStartDate,
-			dueDate: formattedDueDate,
+			dueDate: nextDueDate,
+			repeatInterval,
 		});
 
 		await newService.save();
