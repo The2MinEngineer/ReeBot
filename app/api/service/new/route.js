@@ -6,25 +6,15 @@ import { calculateNextDueDate } from "../../../../utils/calculateNextDueDate";
 export async function POST(request) {
 	try {
 		const requestData = await request.json();
-		const {
-			platform,
-			type,
-			payment,
-			startDate,
-			dueDate,
-			userId,
-			repeatInterval,
-		} = requestData;
+		const { platform, type, payment, startDate, dueDate, userId } = requestData;
 
 		// Convert the date strings to a standard date format
-		const formattedStartDate = new Date(startDate).toISOString().split("T")[0];
-		const formattedDueDate = new Date(dueDate).toISOString().split("T")[0];
+		const formattedStartDate = new Date(startDate).toJSON().split("T")[0];
+		const formattedDueDate = new Date(dueDate).toJSON().split("T")[0];
 
 		// Calculate the next due date using the utility function
-		const nextDueDate = calculateNextDueDate(
-			formattedDueDate,
-			repeatInterval
-		);
+		const { nextDueDate, repeatInterval: calculatedRepeatInterval } =
+			calculateNextDueDate(formattedStartDate, formattedDueDate);
 
 		await connectDB();
 		const newService = new Service({
@@ -34,7 +24,13 @@ export async function POST(request) {
 			payment,
 			startDate: formattedStartDate,
 			dueDate: nextDueDate,
-			repeatInterval,
+			repeatInterval: calculatedRepeatInterval,
+		});
+
+		console.log({
+			"start date": formattedStartDate,
+			"due date": formattedDueDate,
+			"repeat interval": calculatedRepeatInterval,
 		});
 
 		await newService.save();

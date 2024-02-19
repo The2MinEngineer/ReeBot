@@ -82,8 +82,12 @@ const ServiceList = () => {
 								<td className="py-5 text-left">{service.platform}</td>
 								<td className="py-5 text-left">{service.type}</td>
 								<td className="py-5 text-left">N{service.payment}</td>
-								<td className="py-5 text-left">{service.startDate}</td>
-								<td className="py-5 text-left">{service.dueDate}</td>
+								<td className="py-5 text-left">
+									{new Date(service.startDate).toLocaleDateString()}
+								</td>
+								<td className="py-5 text-left">
+									{new Date(service.dueDate).toLocaleDateString()}
+								</td>
 								<td className="py-5 text-center">
 									<Link href={`/editService/${service._id}`}>
 										<RiEditBoxFill className="text-lg text-[#181818] text-opacity-70" />

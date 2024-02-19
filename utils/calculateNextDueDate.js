@@ -1,16 +1,13 @@
-export function calculateNextDueDate(startDate, dueDate, repeatInterval) {
-	if (!repeatInterval) {
-		return dueDate;
-	}
-
+export function calculateNextDueDate(startDate, dueDate) {
 	const start = new Date(startDate);
 	const due = new Date(dueDate);
 
-	// Calculate the time difference in milliseconds
-	const timeDifference = due - start;
+	// Calculate the time difference in days
+	const timeDifferenceInDays = Math.ceil((due - start) / (1000 * 60 * 60 * 24));
 
-	// Calculate the next due date by adding the repeat interval to the current due date
-	const nextDueDate = new Date(due.getTime() + repeatInterval * timeDifference);
-
-	return nextDueDate.toISOString().split("T")[0];
+	// Return the original due date and the calculated time difference in days
+	return {
+		nextDueDate: dueDate,
+		repeatInterval: timeDifferenceInDays,
+	};
 }
