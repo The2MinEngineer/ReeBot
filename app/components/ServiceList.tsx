@@ -9,6 +9,7 @@ import Link from "next/link";
 import RemoveBtn from "./RemoveBtn";
 
 import { RiEditBoxFill } from "react-icons/ri";
+import Table from "./Table";
 
 const ServiceList = () => {
 	const { data: session } = useSession();
@@ -38,72 +39,36 @@ const ServiceList = () => {
 
 	return (
 		<>
-			<div className="relative overflow-x-auto sm:rounded-lg">
-				<table className="w-full">
-					<thead className="text-lg text-white bg-[#181818] font-semibold">
-						<tr className="space-x-4">
-							<th
-								scope="col"
-								className="p-4 text-left"
-							>
-								<div className="flex items-center">
-									<input
-										type="checkbox"
-										className="w-4 h-4 text-blue-600 bg-none border-white rounded focus:ring-white focus:ring-1"
-									/>
-									<label className="sr-only">checkbox</label>
-								</div>
-							</th>
-							<th className="py-5 text-left">Platform</th>
-							<th className="py-5 text-left">Type</th>
-							<th className="py-5 text-left">Payment</th>
-							<th className="py-5 text-left">Start</th>
-							<th className="py-5 text-left">Due</th>
-							<th className="py-5 text-left">Edit</th>
-							<th className="py-5 text-left">Delete</th>
-							<th className="py-5 text-left">Activity</th>
-						</tr>
-					</thead>
-
-					<tbody className="space-y-2 bg-white mt-[10px] sm:rounded-[5px]">
-						{services.map((service: any) => (
-							<tr
-								className="hover space-x-4"
-								key={service._id}
-							>
-								<td className="p-4 text-left">
-									<label>
-										<input
-											type="checkbox"
-											className="checkbox"
-										/>
-									</label>
-								</td>
-								<td className="py-5 text-left">{service.platform}</td>
-								<td className="py-5 text-left">{service.type}</td>
-								<td className="py-5 text-left">N{service.payment}</td>
-								<td className="py-5 text-left">
-									{new Date(service.startDate).toLocaleDateString()}
-								</td>
-								<td className="py-5 text-left">
-									{new Date(service.dueDate).toLocaleDateString()}
-								</td>
-								<td className="py-5 text-center">
-									<Link href={`/editService/${service._id}`}>
-										<RiEditBoxFill className="text-lg text-[#181818] text-opacity-70" />
-									</Link>
-								</td>
-								<td className="py-5 text-center">
-									<RemoveBtn id={service._id} />
-								</td>
-								<td className="py-5 text-center">
-									<ToggleButton />
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
+			<Table
+				platform="Platform"
+				type="Type"
+				payment="Payment"
+				startDate="Start"
+				dueDate="Due"
+				edit="Edit"
+				del="Delete"
+				activity="Activity"
+				className="w-full mb-5 bg-[#181818] text-white rounded-[5px] py-[18px] px-5 flex items-center justify-between text-left text-lg font-semibold"
+			/>
+			{services.map((service: any) => (
+				<div key={service._id}>
+					<Table
+						platform={service.platform}
+						type={service.type}
+						payment={`N${service.payment}`}
+						startDate={new Date(service.startDate).toLocaleDateString()}
+						dueDate={new Date(service.dueDate).toLocaleDateString()}
+						edit={
+							<Link href={`/editService/${service._id}`}>
+								<RiEditBoxFill className="text-lg text-[#181818] text-opacity-70" />
+							</Link>
+						}
+						del={<RemoveBtn id={service._id} />}
+						activity={<ToggleButton />}
+						className="w-full mb-[10px] bg-white text-[#181818] rounded-[5px] py-[18px] px-5 flex items-center justify-between text-left text-lg font-medium"
+					/>
+				</div>
+			))}
 			<div className="w-full mt-5 space-y-2">
 				<div>
 					<AddServiceButton />
