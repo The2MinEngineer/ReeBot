@@ -13,7 +13,6 @@ const ToggleButton = ({
 				<input
 					type="checkbox"
 					className="toggle toggle-primary bg-{#287DF9}"
-					onChange={() => {}}
 					// checked
 				/>
 			</label>
