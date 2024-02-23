@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import AddServiceForm from "../components/serviceForm/AddServiceForm";
+"use client";
 
-const ServiceModal = ({ onClose, onSubmit }: any) => {
-	const { data: session } = useSession();
-	const router = useRouter();
+import React, { useEffect, useRef } from "react";
+import EditServiceForm from "../components/serviceForm/EditServiceForm";
+
+const EditServiceModal = ({ onClose, service, onUpdate }: any) => {
 	const modalRef = useRef(null);
 
 	const handleClickOutside = (e) => {
@@ -21,29 +19,6 @@ const ServiceModal = ({ onClose, onSubmit }: any) => {
 		};
 	}, []);
 
-	const handleFormSubmit = async (formData: any) => {
-		try {
-			const requestBody = {
-				...formData,
-				userId: session?.user?.id,
-			};
-
-			const res = await fetch("/api/service/new", {
-				method: "POST",
-				body: JSON.stringify(requestBody),
-			});
-
-			if (res.ok) {
-				onClose();
-				router.push("/subscriptions");
-			} else {
-				throw new Error("Failed to create a service.");
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
 	return (
 		<div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50 z-50 overflow-y-auto">
 			<div
@@ -55,11 +30,14 @@ const ServiceModal = ({ onClose, onSubmit }: any) => {
 						Add New Service
 					</h1>
 
-					<AddServiceForm onSubmit={handleFormSubmit} />
+					<EditServiceForm
+						service={service}
+						onUpdate={onUpdate}
+					/>
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default ServiceModal;
+export default EditServiceModal;

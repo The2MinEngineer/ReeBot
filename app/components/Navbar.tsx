@@ -1,9 +1,14 @@
+"use client";
+
 import { RiSearchLine } from "react-icons/ri";
 import { MdSettings } from "react-icons/md";
 import { BiSolidNotification } from "react-icons/bi";
 import { BsPersonFill } from "react-icons/bs";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
+	const { data: session, status } = useSession();
+
 	return (
 		<div className="w-full flex justify-between items-center p-5 bg-white">
 			<div>
@@ -29,7 +34,9 @@ const Navbar = () => {
 							<BsPersonFill className="text-white text-[18px]" />
 						</div>
 						<div>
-							<p className="text-[#181818] text-sm font-bold">Hello, Isaac</p>
+							<p className="text-[#181818] text-sm font-bold">
+								Hello, {session?.user?.fullname}
+							</p>
 						</div>
 					</div>
 				</div>

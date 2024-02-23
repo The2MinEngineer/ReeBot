@@ -5,28 +5,45 @@ import { useSession } from "next-auth/react";
 
 import AddServiceButton from "./AddServiceButton";
 import ToggleButton from "./ToggleButton";
-import Link from "next/link";
 import RemoveBtn from "./RemoveBtn";
 
 import { RiEditBoxFill } from "react-icons/ri";
 import Table from "./Table";
+import EditServiceModal from "../modals/EditServiceModal";
 
 const ServiceList = () => {
 	const { data: session } = useSession();
 	const [services, setServices] = useState([]);
+	const [editedService, setEditedService] = useState<any | null>(null);
 
 	const fetchServices = async () => {
 		try {
 			const response = await fetch(`/api/users/${session?.user?.id}/services`);
 			const result = await response.json();
-
-			// Access the 'data' property
 			const data = result.data || [];
 
 			setServices(data);
 		} catch (error) {
 			console.error("Error fetching services:", error);
 		}
+	};
+
+	const [isModalOpen, setModalOpen] = useState(false);
+	const [selectedService, setSelectedService] = useState<any | null>(null);
+
+	const openModal = (serviceId: string) => {
+		const selectedService = services.find(
+			(service) => service._id === serviceId
+		);
+		if (selectedService) {
+			setModalOpen(true);
+			setEditedService(selectedService);
+		}
+	};
+
+	const closeModal = () => {
+		setModalOpen(false);
+		setSelectedService(null);
 	};
 
 	useEffect(() => {
@@ -59,9 +76,24 @@ const ServiceList = () => {
 						startDate={new Date(service.startDate).toLocaleDateString()}
 						dueDate={new Date(service.dueDate).toLocaleDateString()}
 						edit={
-							<Link href={`/editService/${service._id}`}>
-								<RiEditBoxFill className="text-lg text-[#181818] text-opacity-70" />
-							</Link>
+							<div>
+								<button
+									className="text-right p-5 rounded-[5px] cursor-pointer"
+									onClick={() => openModal(service._id)}
+								>
+									<RiEditBoxFill className="text-lg text-[#181818] text-opacity-70" />
+								</button>
+								{isModalOpen && editedService && (
+									<EditServiceModal
+										service={editedService}
+										onClose={closeModal}
+										onUpdate={() => {
+											fetchServices();
+											closeModal();
+										}}
+									/>
+								)}
+							</div>
 						}
 						del={<RemoveBtn id={service._id} />}
 						activity={<ToggleButton />}

@@ -1,5 +1,5 @@
 import MainAppTemplate from "@/app/MainAppTemplete";
-import EditServiceForm from "@/app/components/EditServiceForm";
+import EditServiceForm from "@/app/components/serviceForm/EditServiceForm";
 
 const getServiceById = async (id: any) => {
 	try {

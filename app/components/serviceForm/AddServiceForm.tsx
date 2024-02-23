@@ -7,7 +7,7 @@ const AddServiceForm = ({ onSubmit }: any) => {
 	const [startDate, setStartDate] = useState("");
 	const [dueDate, setDueDate] = useState("");
 
-	const handleSubmit = async (e: any) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		onSubmit({ platform, type, payment, startDate, dueDate });
 	};

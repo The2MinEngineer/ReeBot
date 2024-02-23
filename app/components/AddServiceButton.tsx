@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import AddServiceModal from "../modals/ServiceModal";
+import AddServiceModal from "../modals/AddServiceModal";
 
 const AddServiceButton = () => {
 	const [isModalOpen, setModalOpen] = useState(false);
