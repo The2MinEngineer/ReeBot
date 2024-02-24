@@ -1,35 +1,29 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const EditServiceForm = ({ service, onUpdate }: any) => {
-	const [newPlatform, setNewPlatform] = useState(service?.platform || "");
-	const [newType, setNewType] = useState(service?.type || "");
-	const [newPayment, setNewPayment] = useState(service?.payment || "");
-	const [newStartDate, setNewStartDate] = useState(service?.startDate || "");
-	const [newDueDate, setNewDueDate] = useState(service?.dueDate || "");
+	const [newPlatform, setNewPlatform] = useState("");
+	const [newType, setNewType] = useState("");
+	const [newPayment, setNewPayment] = useState("");
+	const [newStartDate, setNewStartDate] = useState("");
+	const [newDueDate, setNewDueDate] = useState("");
 
 	useEffect(() => {
-		setNewPlatform(service?.platform || "");
-		setNewType(service?.type || "");
-		setNewPayment(service?.payment || "");
-
-		setNewStartDate(
-			service?.startDate
-				? new Date(service.startDate).toISOString().split("T")[0]
-				: ""
-		);
-		setNewDueDate(
-			service?.dueDate
-				? new Date(service.dueDate).toISOString().split("T")[0]
-				: ""
-		);
+		if (service) {
+			setNewPlatform(service.platform || "");
+			setNewType(service.type || "");
+			setNewPayment(service.payment || "");
+			setNewStartDate(service.startDate || "");
+			setNewDueDate(service.dueDate || "");
+		}
 	}, [service]);
+	console.log(service);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`/api/services/${service.id}`, {
+			const response = await fetch(`/api/services/${service._id}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -43,11 +37,13 @@ const EditServiceForm = ({ service, onUpdate }: any) => {
 				}),
 			});
 
-			 if (response.ok) {
-					onUpdate(); // Call the onUpdate function
-				} else {
-					console.error("Failed to update service");
-				}
+			if (response.ok) {
+				const resultText = await response.text();
+				console.log("Raw Response:", resultText);
+				onUpdate();
+			} else {
+				console.error("Failed to update service");
+			}
 		} catch (error) {
 			console.error("Error updating service:", error);
 		}

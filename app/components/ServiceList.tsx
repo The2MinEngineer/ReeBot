@@ -7,14 +7,12 @@ import AddServiceButton from "./AddServiceButton";
 import ToggleButton from "./ToggleButton";
 import RemoveBtn from "./RemoveBtn";
 
-import { RiEditBoxFill } from "react-icons/ri";
 import Table from "./Table";
-import EditServiceModal from "../modals/EditServiceModal";
+import EditServiceButton from "./EditServiceButton";
 
 const ServiceList = () => {
 	const { data: session } = useSession();
 	const [services, setServices] = useState([]);
-	const [editedService, setEditedService] = useState<any | null>(null);
 
 	const fetchServices = async () => {
 		try {
@@ -28,31 +26,11 @@ const ServiceList = () => {
 		}
 	};
 
-	const [isModalOpen, setModalOpen] = useState(false);
-	const [selectedService, setSelectedService] = useState<any | null>(null);
-
-	const openModal = (serviceId: string) => {
-		const selectedService = services.find(
-			(service) => service._id === serviceId
-		);
-		if (selectedService) {
-			setModalOpen(true);
-			setEditedService(selectedService);
-		}
-	};
-
-	const closeModal = () => {
-		setModalOpen(false);
-		setSelectedService(null);
-	};
-
 	useEffect(() => {
 		if (session?.user?.id) {
 			fetchServices();
 		}
 	}, [session?.user?.id]);
-
-	console.log(services);
 
 	return (
 		<>
@@ -76,24 +54,10 @@ const ServiceList = () => {
 						startDate={new Date(service.startDate).toLocaleDateString()}
 						dueDate={new Date(service.dueDate).toLocaleDateString()}
 						edit={
-							<div>
-								<button
-									className="text-right p-5 rounded-[5px] cursor-pointer"
-									onClick={() => openModal(service._id)}
-								>
-									<RiEditBoxFill className="text-lg text-[#181818] text-opacity-70" />
-								</button>
-								{isModalOpen && editedService && (
-									<EditServiceModal
-										service={editedService}
-										onClose={closeModal}
-										onUpdate={() => {
-											fetchServices();
-											closeModal();
-										}}
-									/>
-								)}
-							</div>
+							<EditServiceButton
+								service={fetchServices}
+								fetchServices={fetchServices}
+							/>
 						}
 						del={<RemoveBtn id={service._id} />}
 						activity={<ToggleButton />}

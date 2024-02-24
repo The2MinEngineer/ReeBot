@@ -1,16 +1,36 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import EditServiceForm from "../components/serviceForm/EditServiceForm";
 
-const EditServiceModal = ({ onClose, service, onUpdate }: any) => {
+const EditServiceModal = ({ onClose, serviceId, onUpdate }: any) => {
 	const modalRef = useRef(null);
+	const [service, setService] = useState(null);
 
 	const handleClickOutside = (e) => {
 		if (modalRef.current && !modalRef.current.contains(e.target)) {
 			onClose();
 		}
 	};
+
+	const fetchServiceData = async () => {
+		try {
+			const response = await fetch(`/api/services/${serviceId}`);
+			const result = await response.json();
+			const data = result.data || null;
+			console.log("data:", data);
+
+			setService(data);
+		} catch (error) {
+			console.error("Error fetching service data:", error);
+		}
+	};
+
+	useEffect(() => {
+		if (serviceId) {
+			fetchServiceData();
+		}
+	}, [serviceId]);
 
 	useEffect(() => {
 		document.addEventListener("mousedown", handleClickOutside);
@@ -27,13 +47,15 @@ const EditServiceModal = ({ onClose, service, onUpdate }: any) => {
 			>
 				<div className="my-10 mx-5">
 					<h1 className="text-[#181818] font-bold text-2xl mb-10">
-						Add New Service
+						Edit Service
 					</h1>
 
-					<EditServiceForm
-						service={service}
-						onUpdate={onUpdate}
-					/>
+					{service && (
+						<EditServiceForm
+							service={service}
+							onUpdate={onUpdate}
+						/>
+					)}
 				</div>
 			</div>
 		</div>

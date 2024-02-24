@@ -10,7 +10,7 @@ const Navbar = () => {
 	const { data: session, status } = useSession();
 
 	return (
-		<div className="w-full flex justify-between items-center p-5 bg-white">
+		<nav className="w-full flex justify-between items-center p-5 bg-white">
 			<div>
 				<div className="bg-[#f3f4f3] items-center mr-[15px] flex gap-[10px] px-5 py-[18px] rounded-[10px] max-w-[300px]">
 					<RiSearchLine className="text-sm text-[#181818] text-opacity-30" />
@@ -41,7 +41,7 @@ const Navbar = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</nav>
 	);
 };
 
