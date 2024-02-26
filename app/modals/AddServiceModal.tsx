@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, MouseEvent } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 interface AddServiceFormProps {
 	platform: string;
@@ -10,9 +9,16 @@ interface AddServiceFormProps {
 	dueDate: string;
 }
 
-const AddServiceModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+interface AddServiceModalProps {
+	onClose: () => void;
+	onUpdate: () => void;
+}
+
+const AddServiceModal: React.FC<AddServiceModalProps> = ({
+	onClose,
+	onUpdate,
+}) => {
 	const { data: session } = useSession();
-	const router = useRouter();
 	const modalRef = useRef<HTMLDivElement>(null);
 
 	const handleClickOutside = (e: MouseEvent) => {
@@ -22,9 +28,9 @@ const AddServiceModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 	};
 
 	useEffect(() => {
-		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener("mousedown", handleClickOutside as any);
 		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("mousedown", handleClickOutside as any);
 		};
 	}, []);
 
@@ -45,7 +51,7 @@ const AddServiceModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
 			if (res.ok) {
 				onClose();
-				router.push("/subscriptions");
+				onUpdate();
 			} else {
 				throw new Error("Failed to create a service.");
 			}

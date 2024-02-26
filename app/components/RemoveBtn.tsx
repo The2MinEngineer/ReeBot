@@ -1,11 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 
-const RemoveBtn = ({ id }: any) => {
-	const router = useRouter();
-
+const RemoveBtn = ({ id, onUpdate }: any) => {
 	const removeService = async () => {
 		const confirmed = confirm("Are you sure?");
 
@@ -15,7 +12,7 @@ const RemoveBtn = ({ id }: any) => {
 			});
 
 			if (res.ok) {
-				router.refresh();
+				onUpdate();
 			}
 		}
 	};

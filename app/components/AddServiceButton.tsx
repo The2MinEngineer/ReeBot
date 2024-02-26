@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import AddServiceModal from "../modals/AddServiceModal";
 
-const AddServiceButton = () => {
+interface AddServiceButtonProps {
+	onUpdate: () => void;
+}
+
+const AddServiceButton: React.FC<AddServiceButtonProps> = ({ onUpdate }) => {
 	const [isModalOpen, setModalOpen] = useState(false);
 
 	const openModal = () => {
@@ -23,7 +27,12 @@ const AddServiceButton = () => {
 			</div>
 
 			{/* Render the modal conditionally */}
-			{isModalOpen && <AddServiceModal onClose={closeModal} />}
+			{isModalOpen && (
+				<AddServiceModal
+					onClose={closeModal}
+					onUpdate={onUpdate}
+				/>
+			)}
 		</div>
 	);
 };

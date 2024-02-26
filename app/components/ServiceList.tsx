@@ -12,7 +12,7 @@ interface Service {
 	_id: string;
 	platform: string;
 	type: string;
-	payment: number;
+	payment: any;
 	startDate: string;
 	dueDate: string;
 	// Add other fields as needed
@@ -72,7 +72,12 @@ const ServiceList: React.FC = () => {
 								onUpdate={handleUpdate}
 							/>
 						}
-						del={<RemoveBtn id={service._id} />}
+						del={
+							<RemoveBtn
+								id={service._id}
+								onUpdate={handleUpdate}
+							/>
+						}
 						activity={<ToggleButton />}
 						className="w-full mb-[10px] bg-white text-[#181818] rounded-[5px] py-[18px] px-5 flex items-center justify-between text-left text-lg font-medium"
 					/>
@@ -80,7 +85,7 @@ const ServiceList: React.FC = () => {
 			))}
 			<div className="w-full mt-5 space-y-2">
 				<div>
-					<AddServiceButton />
+					<AddServiceButton onUpdate={handleUpdate} />
 				</div>
 			</div>
 		</>
