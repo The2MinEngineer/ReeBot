@@ -2,10 +2,27 @@
 
 import React, { useState } from "react";
 
-const EditServiceForm = ({ service, onClose, onUpdate }: any) => {
-	const [newPlatform, setNewPlatform] = useState(service?.platform);
-	const [newType, setNewType] = useState(service?.type);
-	const [newPayment, setNewPayment] = useState(service?.payment);
+interface EditServiceFormProps {
+	service: {
+		_id: string;
+		platform: string;
+		type: string;
+		payment: number;
+		startDate: string;
+		dueDate: string;
+	} | null;
+	onClose: () => void;
+	onUpdate: () => void;
+}
+
+const EditServiceForm: React.FC<EditServiceFormProps> = ({
+	service,
+	onClose,
+	onUpdate,
+}) => {
+	const [newPlatform, setNewPlatform] = useState(service?.platform || "");
+	const [newType, setNewType] = useState(service?.type || "");
+	const [newPayment, setNewPayment] = useState(service?.payment || 0);
 	const [newStartDate, setNewStartDate] = useState(() => {
 		return service?.startDate
 			? new Date(service.startDate).toISOString().split("T")[0]
@@ -44,9 +61,7 @@ const EditServiceForm = ({ service, onClose, onUpdate }: any) => {
 
 			if (response.ok) {
 				console.log("successful", requestBody);
-				// Close the modal
 				onClose();
-				// Reload the page
 				onUpdate();
 			} else {
 				console.error("Failed to update service");
@@ -78,7 +93,7 @@ const EditServiceForm = ({ service, onClose, onUpdate }: any) => {
 			/>
 
 			<input
-				onChange={(e) => setNewPayment(e.target.value)}
+				onChange={(e) => setNewPayment(Number(e.target.value))}
 				value={newPayment}
 				type="number"
 				className="input border-[#181818] focus:border-[#181818] focus-within:border-[#181818] outline:border-[#181818] w-full max-w-xs"

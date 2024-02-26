@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 
-const AddServiceForm = ({ onSubmit }: any) => {
+interface AddServiceFormProps {
+	onSubmit: (data: {
+		platform: string;
+		type: string;
+		payment: string;
+		startDate: string;
+		dueDate: string;
+	}) => void;
+}
+
+const AddServiceForm: React.FC<AddServiceFormProps> = ({ onSubmit }) => {
 	const [platform, setPlatform] = useState("");
 	const [type, setType] = useState("");
 	const [payment, setPayment] = useState("");
 	const [startDate, setStartDate] = useState("");
 	const [dueDate, setDueDate] = useState("");
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		onSubmit({ platform, type, payment, startDate, dueDate });
 	};

@@ -1,31 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const SignupForm = () => {
+type FormData = {
+	fullname: string;
+	email: string;
+	telephone: string;
+	password: string;
+};
+
+const SignupForm: React.FC = () => {
 	const router = useRouter();
-	const [data, setData] = useState({
+	const [data, setData] = useState<FormData>({
 		fullname: "",
 		email: "",
 		telephone: "",
 		password: "",
 	});
 
-	const registerUser = async (e: any) => {
+	const registerUser = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const response = await fetch("/api/register", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ data }),
-		});
+		try {
+			const response = await fetch("/api/register", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ data }),
+			});
 
-		const userInfo = await response.json();
-		console.log(userInfo);
-		router.push("/signin");
+			const userInfo = await response.json();
+			console.log(userInfo);
+			router.push("/signin");
+		} catch (error) {
+			console.error("Error during registration:", error);
+		}
 	};
 
 	return (
@@ -44,7 +55,7 @@ const SignupForm = () => {
 						id="fullname"
 						placeholder="Enter your fullname"
 						value={data.fullname}
-						onChange={(e: any) =>
+						onChange={(e: ChangeEvent<HTMLInputElement>) =>
 							setData({ ...data, fullname: e.target.value })
 						}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -61,7 +72,9 @@ const SignupForm = () => {
 						id="email"
 						placeholder="Enter your email"
 						value={data.email}
-						onChange={(e: any) => setData({ ...data, email: e.target.value })}
+						onChange={(e: ChangeEvent<HTMLInputElement>) =>
+							setData({ ...data, email: e.target.value })
+						}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					/>
 				</div>
@@ -76,7 +89,7 @@ const SignupForm = () => {
 						id="telephone"
 						placeholder="Enter your phone number"
 						value={data.telephone}
-						onChange={(e: any) =>
+						onChange={(e: ChangeEvent<HTMLInputElement>) =>
 							setData({ ...data, telephone: e.target.value })
 						}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -93,7 +106,7 @@ const SignupForm = () => {
 						id="password"
 						placeholder="••••••••"
 						value={data.password}
-						onChange={(e: any) =>
+						onChange={(e: ChangeEvent<HTMLInputElement>) =>
 							setData({ ...data, password: e.target.value })
 						}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

@@ -6,8 +6,8 @@ import { BiSolidNotification } from "react-icons/bi";
 import { BsPersonFill } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 
-const Navbar = () => {
-	const { data: session, status } = useSession();
+const Navbar: React.FC = () => {
+	const { data: session } = useSession();
 
 	return (
 		<nav className="w-full flex justify-between items-center p-5 bg-white">
@@ -17,7 +17,7 @@ const Navbar = () => {
 					<input
 						type="text"
 						placeholder="Search..."
-						className="text-sm placeholder:text-xs text-[#181818] placeholder:text-opacity-30 placeholder:text-[#181818] text-opacity-30 font-medium bg-[#f3f4f3] focus:outline-none focus:border-none "
+						className="text-sm placeholder:text-xs text-[#181818] placeholder:text-opacity-30 placeholder:text-[#181818] text-opacity-30 font-medium bg-[#f3f4f3] focus:outline-none focus:border-none"
 					/>
 				</div>
 			</div>
@@ -35,7 +35,7 @@ const Navbar = () => {
 						</div>
 						<div>
 							<p className="text-[#181818] text-sm font-bold">
-								Hello, {session?.user?.fullname}
+								Hello, {session?.user?.fullname || "Guest"}
 							</p>
 						</div>
 					</div>

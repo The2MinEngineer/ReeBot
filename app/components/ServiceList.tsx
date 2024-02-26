@@ -1,36 +1,45 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-
 import AddServiceButton from "./AddServiceButton";
 import ToggleButton from "./ToggleButton";
 import RemoveBtn from "./RemoveBtn";
-
 import Table from "./Table";
 import EditServiceButton from "./EditServiceButton";
 
-const ServiceList = () => {
+interface Service {
+	_id: string;
+	platform: string;
+	type: string;
+	payment: number;
+	startDate: string;
+	dueDate: string;
+	// Add other fields as needed
+}
+
+const ServiceList: React.FC = () => {
 	const { data: session } = useSession();
-	const [services, setServices] = useState([]);
+	const [services, setServices] = useState<Service[]>([]);
 
 	const fetchServices = async () => {
 		try {
-			const response = await fetch(`/api/users/${session?.user?.id}/services`);
-			const result = await response.json();
-			const data = result.data || [];
-
-			setServices(data);
+			if (session?.user && "id" in session.user) {
+				const response = await fetch(`/api/users/${session.user.id}/services`);
+				const result = await response.json();
+				const data: Service[] = result.data || [];
+				setServices(data);
+			}
 		} catch (error) {
 			console.error("Error fetching services:", error);
 		}
 	};
 
 	useEffect(() => {
-		if (session?.user?.id) {
+		if (session?.user) {
 			fetchServices();
 		}
-	}, [session?.user?.id]);
+	}, [session?.user]);
 
 	const handleUpdate = () => {
 		fetchServices();
@@ -49,7 +58,7 @@ const ServiceList = () => {
 				activity="Activity"
 				className="w-full mb-5 bg-[#181818] text-white rounded-[5px] py-[18px] px-5 flex items-center justify-between text-left text-lg font-semibold"
 			/>
-			{services.map((service: any) => (
+			{services.map((service) => (
 				<div key={service._id}>
 					<Table
 						platform={service.platform}
@@ -57,7 +66,12 @@ const ServiceList = () => {
 						payment={`N${service.payment}`}
 						startDate={new Date(service.startDate).toLocaleDateString()}
 						dueDate={new Date(service.dueDate).toLocaleDateString()}
-						edit={<EditServiceButton id={service._id} onUpdate={handleUpdate} />}
+						edit={
+							<EditServiceButton
+								id={service._id}
+								onUpdate={handleUpdate}
+							/>
+						}
 						del={<RemoveBtn id={service._id} />}
 						activity={<ToggleButton />}
 						className="w-full mb-[10px] bg-white text-[#181818] rounded-[5px] py-[18px] px-5 flex items-center justify-between text-left text-lg font-medium"

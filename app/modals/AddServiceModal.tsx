@@ -1,15 +1,22 @@
 import React, { useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import AddServiceForm from "../components/serviceForm/AddServiceForm";
 
-const AddServiceModal = ({ onClose }: any) => {
+interface AddServiceFormProps {
+	platform: string;
+	type: string;
+	payment: string;
+	startDate: string;
+	dueDate: string;
+}
+
+const AddServiceModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 	const { data: session } = useSession();
 	const router = useRouter();
-	const modalRef = useRef(null);
+	const modalRef = useRef<HTMLDivElement>(null);
 
-	const handleClickOutside = (e) => {
-		if (modalRef.current && !modalRef.current.contains(e.target)) {
+	const handleClickOutside = (e: MouseEvent) => {
+		if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
 			onClose();
 		}
 	};
@@ -21,15 +28,18 @@ const AddServiceModal = ({ onClose }: any) => {
 		};
 	}, []);
 
-	const handleFormSubmit = async (formData: any) => {
+	const handleFormSubmit = async (formData: AddServiceFormProps) => {
 		try {
 			const requestBody = {
 				...formData,
-				userId: session?.user?.id,
+				userId: session?.user?.id || null,
 			};
 
 			const res = await fetch("/api/service/new", {
 				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
 				body: JSON.stringify(requestBody),
 			});
 
@@ -40,7 +50,7 @@ const AddServiceModal = ({ onClose }: any) => {
 				throw new Error("Failed to create a service.");
 			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	};
 
@@ -55,7 +65,62 @@ const AddServiceModal = ({ onClose }: any) => {
 						Add New Service
 					</h1>
 
-					<AddServiceForm onSubmit={handleFormSubmit} />
+					<form
+						className="flex flex-col gap-3"
+						onSubmit={(e) => {
+							e.preventDefault();
+							const formData: AddServiceFormProps = {
+								platform: e.currentTarget.platform.value,
+								type: e.currentTarget.type.value,
+								payment: e.currentTarget.payment.value,
+								startDate: e.currentTarget.startDate.value,
+								dueDate: e.currentTarget.dueDate.value,
+							};
+							handleFormSubmit(formData);
+						}}
+					>
+						<input
+							type="text"
+							name="platform"
+							className="input border-[#181818] focus:border-[#181818] focus-within:border-[#181818] outline:border-[#181818] w-full max-w-xs"
+							placeholder="Platform"
+						/>
+
+						<input
+							type="text"
+							name="type"
+							className="input border-[#181818] focus:border-[#181818] focus-within:border-[#181818] outline:border-[#181818] w-full max-w-xs"
+							placeholder="Type"
+						/>
+
+						<input
+							type="number"
+							name="payment"
+							className="input border-[#181818] focus:border-[#181818] focus-within:border-[#181818] outline:border-[#181818] w-full max-w-xs"
+							placeholder="Payment"
+						/>
+
+						<input
+							type="date"
+							name="startDate"
+							className="input border-[#181818] focus:border-[#181818] focus-within:border-[#181818] outline:border-[#181818] w-full max-w-xs"
+							placeholder="Start Date"
+						/>
+
+						<input
+							type="date"
+							name="dueDate"
+							className="input border-[#181818] focus:border-[#181818] focus-within:border-[#181818] outline:border-[#181818] w-full max-w-xs"
+							placeholder="Due Date"
+						/>
+
+						<button
+							type="submit"
+							className="w-full max-w-xs bg-[#287DF9] text-white rounded-lg py-3"
+						>
+							Add Service
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>
