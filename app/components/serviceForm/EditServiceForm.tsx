@@ -1,45 +1,52 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const EditServiceForm = ({ service, onUpdate }: any) => {
-	const [newPlatform, setNewPlatform] = useState("");
-	const [newType, setNewType] = useState("");
-	const [newPayment, setNewPayment] = useState("");
-	const [newStartDate, setNewStartDate] = useState("");
-	const [newDueDate, setNewDueDate] = useState("");
-
-	useEffect(() => {
-		if (service) {
-			setNewPlatform(service.platform || "");
-			setNewType(service.type || "");
-			setNewPayment(service.payment || "");
-			setNewStartDate(service.startDate || "");
-			setNewDueDate(service.dueDate || "");
-		}
-	}, [service]);
-	console.log(service);
+const EditServiceForm = ({ service, onClose, onUpdate }: any) => {
+	const [newPlatform, setNewPlatform] = useState(service?.platform);
+	const [newType, setNewType] = useState(service?.type);
+	const [newPayment, setNewPayment] = useState(service?.payment);
+	const [newStartDate, setNewStartDate] = useState(() => {
+		return service?.startDate
+			? new Date(service.startDate).toISOString().split("T")[0]
+			: "";
+	});
+	const [newDueDate, setNewDueDate] = useState(() => {
+		return service?.dueDate
+			? new Date(service.dueDate).toISOString().split("T")[0]
+			: "";
+	});
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+
+		if (!service) {
+			console.error("Service data is undefined or null.");
+			return;
+		}
+
+		const requestBody = {
+			newPlatform: newPlatform,
+			newType: newType,
+			newPayment: newPayment,
+			newStartDate: newStartDate,
+			newDueDate: newDueDate,
+		};
+
 		try {
-			const response = await fetch(`/api/services/${service._id}`, {
-				method: "PUT",
+			const response = await fetch(`/api/service/${service?._id}`, {
+				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({
-					platform: newPlatform,
-					type: newType,
-					payment: newPayment,
-					startDate: newStartDate,
-					dueDate: newDueDate,
-				}),
+				body: JSON.stringify(requestBody),
 			});
 
 			if (response.ok) {
-				const resultText = await response.text();
-				console.log("Raw Response:", resultText);
+				console.log("successful", requestBody);
+				// Close the modal
+				onClose();
+				// Reload the page
 				onUpdate();
 			} else {
 				console.error("Failed to update service");

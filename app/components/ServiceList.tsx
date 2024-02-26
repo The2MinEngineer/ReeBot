@@ -32,6 +32,10 @@ const ServiceList = () => {
 		}
 	}, [session?.user?.id]);
 
+	const handleUpdate = () => {
+		fetchServices();
+	};
+
 	return (
 		<>
 			<Table
@@ -53,12 +57,7 @@ const ServiceList = () => {
 						payment={`N${service.payment}`}
 						startDate={new Date(service.startDate).toLocaleDateString()}
 						dueDate={new Date(service.dueDate).toLocaleDateString()}
-						edit={
-							<EditServiceButton
-								service={fetchServices}
-								fetchServices={fetchServices}
-							/>
-						}
+						edit={<EditServiceButton id={service._id} onUpdate={handleUpdate} />}
 						del={<RemoveBtn id={service._id} />}
 						activity={<ToggleButton />}
 						className="w-full mb-[10px] bg-white text-[#181818] rounded-[5px] py-[18px] px-5 flex items-center justify-between text-left text-lg font-medium"

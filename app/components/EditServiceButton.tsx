@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditServiceModal from "../modals/EditServiceModal";
 import { RiEditBoxFill } from "react-icons/ri";
 
-const EditServiceButton = ({ fetchServices }: any) => {
+const EditServiceButton = ({ id, onUpdate }: any) => {
 	const [isModalOpen, setModalOpen] = useState(false);
+	const [service, setService] = useState<any | null>(null);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await fetch(`/api/service/${id}`);
+				const result = await response.json();
+				setService(result);
+			} catch (error) {
+				console.error("Error fetching service by id:", error);
+			}
+		};
+
+		fetchData();
+	}, [id]);
 
 	const openModal = () => {
+		console.log(service?.service?.platform);
 		setModalOpen(true);
 	};
 
@@ -25,7 +41,8 @@ const EditServiceButton = ({ fetchServices }: any) => {
 			{isModalOpen && (
 				<EditServiceModal
 					onClose={closeModal}
-					onUpdate={fetchServices}
+					service={service?.service}
+					onUpdate={onUpdate}
 				/>
 			)}
 		</>

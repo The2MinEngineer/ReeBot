@@ -1,36 +1,16 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import EditServiceForm from "../components/serviceForm/EditServiceForm";
 
-const EditServiceModal = ({ onClose, serviceId, onUpdate }: any) => {
+const EditServiceModal = ({ onClose, service, onUpdate }: any) => {
 	const modalRef = useRef(null);
-	const [service, setService] = useState(null);
 
 	const handleClickOutside = (e) => {
 		if (modalRef.current && !modalRef.current.contains(e.target)) {
 			onClose();
 		}
 	};
-
-	const fetchServiceData = async () => {
-		try {
-			const response = await fetch(`/api/services/${serviceId}`);
-			const result = await response.json();
-			const data = result.data || null;
-			console.log("data:", data);
-
-			setService(data);
-		} catch (error) {
-			console.error("Error fetching service data:", error);
-		}
-	};
-
-	useEffect(() => {
-		if (serviceId) {
-			fetchServiceData();
-		}
-	}, [serviceId]);
 
 	useEffect(() => {
 		document.addEventListener("mousedown", handleClickOutside);
@@ -53,6 +33,7 @@ const EditServiceModal = ({ onClose, serviceId, onUpdate }: any) => {
 					{service && (
 						<EditServiceForm
 							service={service}
+							onClose={onClose}
 							onUpdate={onUpdate}
 						/>
 					)}
