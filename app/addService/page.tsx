@@ -12,7 +12,8 @@ const AddService = () => {
 	const [startDate, setStartDate] = useState("");
 	const [dueDate, setDueDate] = useState("");
 
-	const { data: session, status } = useSession();
+	const {data: session, status} = useSession()
+	const isAuthenticated = status === "authenticated";
 
 	const router = useRouter();
 
@@ -31,7 +32,7 @@ const AddService = () => {
 			startDate,
 			dueDate,
 			payment,
-			userId: session?.user?.id,
+			userId: isAuthenticated ? session?.user?.id : undefined,
 		};
 
 		try {

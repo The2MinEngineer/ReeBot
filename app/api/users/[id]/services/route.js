@@ -10,8 +10,6 @@ export async function GET(request, { params }) {
 		const services = await Service.find({ creator: params.id }).populate(
 			"creator"
 		);
-
-		console.log(services);
 		return NextResponse.json({ data: services });
 	} catch (error) {
 		console.error("Error in GET function:", error);
