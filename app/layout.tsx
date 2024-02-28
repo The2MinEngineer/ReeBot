@@ -11,13 +11,15 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+	session,
 	children,
 }: Readonly<{
+	session: any;
 	children: React.ReactNode;
 }>) {
 	return (
 		<html lang="en">
-			<Provider>
+			<Provider session={session}>
 				<body className={manrope.className}>{children}</body>
 			</Provider>
 		</html>
