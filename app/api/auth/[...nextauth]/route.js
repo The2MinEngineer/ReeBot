@@ -4,7 +4,7 @@ import connectDB from "../../../../utils/connect";
 import bcrypt from "bcrypt";
 import User from "@/app/(models)/User";
 
-export const authOptions = {
+export default NextAuth = {
 	pages: {
 		signIn: "/signin",
 		error: "/signin",
@@ -89,6 +89,3 @@ export const authOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 	debug: process.env.NODE_ENV === "development",
 };
-
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
