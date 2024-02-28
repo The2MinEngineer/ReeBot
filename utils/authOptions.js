@@ -2,6 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import User from "@/app/(models)/User";
 import connectDB from "./connect";
+import IdentityServer4 from "next-auth/providers/identity-server4";
 
 export const authOptions = {
 	pages: {
@@ -75,12 +76,14 @@ export const authOptions = {
 				session.user = {
 					...token.uid,
 					name: token.uid.fullname,
+
 					provider: "credentials",
 				};
 			} else {
 				console.error("User data not found in the token.");
 				return {};
 			}
+			console.log(session.user);
 			return session;
 		},
 	},
