@@ -12,10 +12,9 @@ interface Service {
 	_id: string;
 	platform: string;
 	type: string;
-	payment: any;
+	payment?: number | string;
 	startDate: string;
 	dueDate: string;
-	// Add other fields as needed
 }
 
 const ServiceList: React.FC = () => {

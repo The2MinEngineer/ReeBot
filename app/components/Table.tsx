@@ -3,7 +3,7 @@ import React from "react";
 interface TableProps {
 	platform: string;
 	type: string;
-	payment: number;
+	payment: number | string;
 	startDate: string;
 	dueDate: string;
 	className: string;

@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
 						</div>
 						<div>
 							<p className="text-[#181818] text-sm font-bold">
-								Hello, {session?.user?.fullname || "Guest"}
+								Hello, {session?.user?.name || "Guest"}
 							</p>
 						</div>
 					</div>

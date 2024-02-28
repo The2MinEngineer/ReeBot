@@ -76,14 +76,12 @@ export const authOptions = {
 				session.user = {
 					...token.uid,
 					name: token.uid.fullname,
-
 					provider: "credentials",
 				};
 			} else {
 				console.error("User data not found in the token.");
 				return {};
 			}
-			console.log(session.user);
 			return session;
 		},
 	},

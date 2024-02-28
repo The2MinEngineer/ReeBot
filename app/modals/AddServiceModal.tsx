@@ -2,6 +2,7 @@ import React, { useEffect, useRef, MouseEvent } from "react";
 import { useSession } from "next-auth/react";
 
 interface AddServiceFormProps {
+	id?: string;
 	platform: string;
 	type: string;
 	payment: string;
@@ -18,7 +19,7 @@ const AddServiceModal: React.FC<AddServiceModalProps> = ({
 	onClose,
 	onUpdate,
 }) => {
-	const { data: session } = useSession();
+	const { data: session } = useSession<any>();
 	const modalRef = useRef<HTMLDivElement>(null);
 
 	const handleClickOutside = (e: MouseEvent) => {
@@ -36,9 +37,11 @@ const AddServiceModal: React.FC<AddServiceModalProps> = ({
 
 	const handleFormSubmit = async (formData: AddServiceFormProps) => {
 		try {
+			const userId =
+				(session?.user as { id?: string | null | undefined })?.id || null;
 			const requestBody = {
 				...formData,
-				userId: session?.user?.id || null,
+				userId: userId,
 			};
 
 			const res = await fetch("/api/service/new", {
