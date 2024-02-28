@@ -32,7 +32,7 @@ const AddServiceModal: React.FC<AddServiceModalProps> = ({
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside as any);
 		};
-	}, []);
+	}, [handleClickOutside]);
 
 	const handleFormSubmit = async (formData: AddServiceFormProps) => {
 		try {

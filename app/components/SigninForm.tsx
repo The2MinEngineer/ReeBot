@@ -88,7 +88,7 @@ const SigninForm: React.FC = () => {
 					Sign in
 				</button>
 				<p className="text-[#181811] text-opacity-40 text-sm mt-2">
-					Don't have an account?{" "}
+					Don&apos;t have an account?{" "}
 					<span className="text-[#287DF9] text-opacity-100 hover:cursor-pointer hover:underline">
 						<Link href="/signup">Signup</Link>
 					</span>

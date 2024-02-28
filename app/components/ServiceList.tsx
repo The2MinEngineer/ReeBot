@@ -39,7 +39,7 @@ const ServiceList: React.FC = () => {
 		if (session?.user) {
 			fetchServices();
 		}
-	}, [session?.user]);
+	}, [session?.user, fetchServices]);
 
 	const handleUpdate = () => {
 		fetchServices();
