@@ -3,7 +3,7 @@ import MainReebotLogo from "@/public/assets/MainReeBot.svg";
 import IconReebotLogo from "@/public/assets/IconReebot.svg";
 import Image from "next/image";
 
-const Logo = ({ main, icon }: { main?: boolean; icon?: boolean }) => {
+const Logo = ({ main, icon }) => {
 	const src = () => {
 		if (main) {
 			return MainReebotLogo;

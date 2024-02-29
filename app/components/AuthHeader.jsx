@@ -1,4 +1,4 @@
-const AuthHeader = ({ header, desc }: { header: string; desc: string }) => {
+const AuthHeader = ({ header, desc }) => {
 	return (
 		<div>
 			<h1 className="text-[#181818] text-center text-[28px] font-bold mb-[5px]">

@@ -8,25 +8,16 @@ import RemoveBtn from "./RemoveBtn";
 import Table from "./Table";
 import EditServiceButton from "./EditServiceButton";
 
-interface Service {
-	_id: string;
-	platform: string;
-	type: string;
-	payment?: number | string;
-	startDate: string;
-	dueDate: string;
-}
-
-const ServiceList: React.FC = () => {
+const ServiceList = () => {
 	const { data: session } = useSession();
-	const [services, setServices] = useState<Service[]>([]);
+	const [services, setServices] = useState([]);
 
 	const fetchServices = async () => {
 		try {
 			if (session?.user && "id" in session.user) {
 				const response = await fetch(`/api/users/${session.user.id}/services`);
 				const result = await response.json();
-				const data: Service[] = result.data || [];
+				const data = result.data || [];
 				setServices(data);
 			}
 		} catch (error) {

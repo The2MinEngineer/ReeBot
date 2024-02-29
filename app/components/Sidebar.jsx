@@ -16,7 +16,7 @@ const Sidebar = () => {
 	const router = useRouter();
 	const [activeMenuItem, setActiveMenuItem] = useState("Dashboard");
 
-	const handleMenuItemClick = (text: string) => {
+	const handleMenuItemClick = (text) => {
 		if (text === "Logout") {
 			signOut().then(() => router.push("/signin"));
 		} else {

@@ -6,7 +6,7 @@ import { BiSolidNotification } from "react-icons/bi";
 import { BsPersonFill } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
 	const { data: session } = useSession();
 
 	return (

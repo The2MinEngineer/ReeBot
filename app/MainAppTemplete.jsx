@@ -1,11 +1,7 @@
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 
-export default function MainAppTemplate({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function MainAppTemplate({ children }) {
 	return (
 		<div className="flex">
 			<Sidebar />

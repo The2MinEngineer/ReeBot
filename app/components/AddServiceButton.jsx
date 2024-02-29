@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import AddServiceModal from "../modals/AddServiceModal";
 
-interface AddServiceButtonProps {
-	onUpdate: () => void;
-}
-
-const AddServiceButton: React.FC<AddServiceButtonProps> = ({ onUpdate }) => {
+const AddServiceButton = ({ onUpdate }) => {
 	const [isModalOpen, setModalOpen] = useState(false);
 
 	const openModal = () => {

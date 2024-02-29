@@ -4,23 +4,16 @@ import React, { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-type FormData = {
-	fullname: string;
-	email: string;
-	telephone: string;
-	password: string;
-};
-
-const SignupForm: React.FC = () => {
+const SignupForm = () => {
 	const router = useRouter();
-	const [data, setData] = useState<FormData>({
+	const [data, setData] = useState({
 		fullname: "",
 		email: "",
 		telephone: "",
 		password: "",
 	});
 
-	const registerUser = async (e: React.FormEvent) => {
+	const registerUser = async (e) => {
 		e.preventDefault();
 		try {
 			const response = await fetch("/api/register", {
@@ -55,9 +48,7 @@ const SignupForm: React.FC = () => {
 						id="fullname"
 						placeholder="Enter your fullname"
 						value={data.fullname}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setData({ ...data, fullname: e.target.value })
-						}
+						onChange={(e) => setData({ ...data, fullname: e.target.value })}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					/>
 				</div>
@@ -72,9 +63,7 @@ const SignupForm: React.FC = () => {
 						id="email"
 						placeholder="Enter your email"
 						value={data.email}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setData({ ...data, email: e.target.value })
-						}
+						onChange={(e) => setData({ ...data, email: e.target.value })}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					/>
 				</div>
@@ -89,9 +78,7 @@ const SignupForm: React.FC = () => {
 						id="telephone"
 						placeholder="Enter your phone number"
 						value={data.telephone}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setData({ ...data, telephone: e.target.value })
-						}
+						onChange={(e) => setData({ ...data, telephone: e.target.value })}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					/>
 				</div>
@@ -106,9 +93,7 @@ const SignupForm: React.FC = () => {
 						id="password"
 						placeholder="••••••••"
 						value={data.password}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setData({ ...data, password: e.target.value })
-						}
+						onChange={(e) => setData({ ...data, password: e.target.value })}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					/>
 				</div>

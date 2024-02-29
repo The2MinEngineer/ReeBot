@@ -2,24 +2,7 @@
 
 import React, { useState } from "react";
 
-interface EditServiceFormProps {
-	service: {
-		_id: string;
-		platform: string;
-		type: string;
-		payment: number;
-		startDate: string;
-		dueDate: string;
-	} | null;
-	onClose: () => void;
-	onUpdate: () => void;
-}
-
-const EditServiceForm: React.FC<EditServiceFormProps> = ({
-	service,
-	onClose,
-	onUpdate,
-}) => {
+const EditServiceForm = ({ service, onClose, onUpdate }) => {
 	const [newPlatform, setNewPlatform] = useState(service?.platform || "");
 	const [newType, setNewType] = useState(service?.type || "");
 	const [newPayment, setNewPayment] = useState(service?.payment || 0);
@@ -34,7 +17,7 @@ const EditServiceForm: React.FC<EditServiceFormProps> = ({
 			: "";
 	});
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		if (!service) {

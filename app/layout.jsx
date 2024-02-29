@@ -4,12 +4,7 @@ import Provider from "./context/Provider";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
-interface RootLayoutProps {
-	session?: any;
-	children: React.ReactNode;
-}
-
-export default function RootLayout({ session, children }: RootLayoutProps) {
+export default function RootLayout({ session, children }) {
 	return (
 		<html lang="en">
 			<Provider session={session}>

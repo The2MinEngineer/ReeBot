@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import EditServiceModal from "../modals/EditServiceModal";
 import { RiEditBoxFill } from "react-icons/ri";
 
-const EditServiceButton = ({ id, onUpdate }: any) => {
+const EditServiceButton = ({ id, onUpdate }) => {
 	const [isModalOpen, setModalOpen] = useState(false);
-	const [service, setService] = useState<any | null>(null);
+	const [service, setService] = useState(null);
 
 	useEffect(() => {
 		const fetchData = async () => {

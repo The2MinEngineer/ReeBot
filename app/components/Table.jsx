@@ -1,18 +1,6 @@
 import React from "react";
 
-interface TableProps {
-	platform: string;
-	type: string;
-	payment: number | string;
-	startDate: string;
-	dueDate: string;
-	className: string;
-	edit: React.ReactNode;
-	del: React.ReactNode;
-	activity: React.ReactNode;
-}
-
-const Table: React.FC<TableProps> = ({
+const Table = ({
 	platform,
 	type,
 	payment,

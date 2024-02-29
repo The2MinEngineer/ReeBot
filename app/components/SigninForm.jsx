@@ -5,20 +5,15 @@ import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
-type FormData = {
-	email: string;
-	password: string;
-};
-
-const SigninForm: React.FC = () => {
+const SigninForm = () => {
 	const router = useRouter();
 	const { data: session } = useSession();
-	const [data, setData] = useState<FormData>({
+	const [data, setData] = useState({
 		email: "",
 		password: "",
 	});
 
-	const loginUser = async (e: React.FormEvent) => {
+	const loginUser = async (e) => {
 		try {
 			e.preventDefault();
 			const response = await signIn("credentials", {
@@ -58,9 +53,7 @@ const SigninForm: React.FC = () => {
 						id="email"
 						placeholder="Enter your email"
 						value={data.email}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setData({ ...data, email: e.target.value })
-						}
+						onChange={(e) => setData({ ...data, email: e.target.value })}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					/>
 				</div>
@@ -74,9 +67,7 @@ const SigninForm: React.FC = () => {
 						id="password"
 						placeholder="••••••••"
 						value={data.password}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setData({ ...data, password: e.target.value })
-						}
+						onChange={(e) => setData({ ...data, password: e.target.value })}
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					/>
 				</div>

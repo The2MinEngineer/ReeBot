@@ -1,12 +1,6 @@
 import React from "react";
 
-const ToggleButton = ({
-	value,
-	onChange,
-}: {
-	value?: boolean;
-	onChange?: () => void;
-}) => {
+const ToggleButton = ({ value, onChange }) => {
 	return (
 		<div className="form-control">
 			<label className="cursor-pointer label">

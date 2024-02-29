@@ -3,30 +3,11 @@
 import React, { useEffect, useRef } from "react";
 import EditServiceForm from "../components/serviceForm/EditServiceForm";
 
-interface ServiceData {
-	_id: string;
-	platform: string;
-	type: string;
-	payment: number;
-	startDate: string;
-	dueDate: string;
-}
+const EditServiceModal = ({ onClose, service, onUpdate }) => {
+	const modalRef = (useRef < HTMLDivElement) | (null > null);
 
-interface EditServiceModalProps {
-	onClose: () => void;
-	service: ServiceData | null;
-	onUpdate: () => void;
-}
-
-const EditServiceModal: React.FC<EditServiceModalProps> = ({
-	onClose,
-	service,
-	onUpdate,
-}: EditServiceModalProps) => {
-	const modalRef = useRef<HTMLDivElement | null>(null);
-
-	const handleClickOutside = (e: MouseEvent) => {
-		if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+	const handleClickOutside = (e) => {
+		if (modalRef.current && !modalRef.current.contains(e.target)) {
 			onClose();
 		}
 	};

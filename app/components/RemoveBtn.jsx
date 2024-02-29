@@ -2,7 +2,7 @@
 
 import { RiDeleteBin7Fill } from "react-icons/ri";
 
-const RemoveBtn = ({ id, onUpdate }: any) => {
+const RemoveBtn = ({ id, onUpdate }) => {
 	const removeService = async () => {
 		const confirmed = confirm("Are you sure?");
 
