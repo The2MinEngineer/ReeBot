@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 
 const AddServiceModal = ({ onClose, onUpdate }) => {
 	const { data: session } = useSession();
-	const modalRef = useRef < HTMLDivElement > null;
+	const modalRef = useRef(null);
 
 	const handleClickOutside = (e) => {
 		if (modalRef.current && !modalRef.current.contains(e.target)) {

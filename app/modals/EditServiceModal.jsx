@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import EditServiceForm from "../components/serviceForm/EditServiceForm";
 
 const EditServiceModal = ({ onClose, service, onUpdate }) => {
-	const modalRef = (useRef < HTMLDivElement) | (null > null);
+	const modalRef = useRef(null);
 
 	const handleClickOutside = (e) => {
 		if (modalRef.current && !modalRef.current.contains(e.target)) {
