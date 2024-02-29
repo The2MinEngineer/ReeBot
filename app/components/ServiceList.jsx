@@ -69,7 +69,7 @@ const ServiceList = () => {
 							/>
 						}
 						activity={<ToggleButton />}
-						className="w-full mb-[10px] bg-white text-[#181818] rounded-[5px] py-[18px] px-5 flex items-center justify-between text-left text-lg font-medium"
+						className="w-full mb-[10px] bg-white text-[#181818] rounded-[5px] py-[12px] px-5 flex items-center justify-between text-left text-lg font-medium"
 					/>
 				</div>
 			))}
