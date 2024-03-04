@@ -4,7 +4,13 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
 	{
-		fullname: {
+		firstName: {
+			type: String,
+			required: [true, "fullname is required!"],
+			minLength: [4, "fullname should be at least 4 characters long"],
+			maxLength: [30, "fullname should be less than 30 characters"],
+		},
+		lastName: {
 			type: String,
 			required: [true, "fullname is required!"],
 			minLength: [4, "fullname should be at least 4 characters long"],
@@ -32,6 +38,31 @@ const userSchema = new Schema(
 			type: String,
 			required: [true, "password is required!"],
 			select: false,
+		},
+		subscribed: {
+			type: Boolean,
+			default: false,
+		},
+		gender: {
+			type: String,
+			enum: ["male", "female"],
+		},
+		plan: {
+			type: String,
+			enum: ["basic", "premium"],
+			default: "basic",
+		},
+		country: {
+			type: String,
+		},
+		state: {
+			type: String,
+		},
+		city: {
+			type: String,
+		},
+		house: {
+			type: String,
 		},
 	},
 	{
